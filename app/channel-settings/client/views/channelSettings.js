@@ -11,6 +11,9 @@ import { roomTypes } from '../../../utils';
 import { ChannelSettings } from '../lib/ChannelSettings';
 import { createTemplateForComponent } from '../../../../client/reactAdapters';
 
+// #mod
+// import { saveRoomSettings } from '../server/saveRoomSettings';
+
 createTemplateForComponent('channelSettingsEditing', () => import('../../../../client/channel/ChannelInfo/EditChannel'));
 
 const common = {
@@ -149,10 +152,28 @@ Template.channelSettings.events({
 	'click .js-delete'() {
 		return erase(this.rid);
 	},
+	// #mod
+	'click .js-change-room-status'(e, instance) {
+		alert('Change room status here');
+		console.log('Change room status. Instance: ');
+		console.log(instance);
+		// console.log('Current room: ');
+		// console.log(Template.instance());
+		customField = 'Hello world!!!!!!';
+		result = Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', customField);
+		console.log(result);
+		modDiscussionStatus = instance.room.modDiscussionStatus;
+		console.log('Discussion status: ')
+		console.log(modDiscussionStatus)
+	}
 });
+
 
 Template.channelSettingsInfo.onCreated(function() {
 	this.room = ChatRoom.findOne(this.data && this.data.rid);
+	console.log(this.data);
+	console.log(this.rid);
+
 });
 
 Template.channelSettingsInfo.helpers({
@@ -170,6 +191,7 @@ Template.channelSettingsInfo.helpers({
 		return s.unescapeHTML(value);
 	},
 	channelSettings() {
+		// console.log('R'ChannelSettings.getOptions(Template.currentData(), 'room'));
 		return ChannelSettings.getOptions(Template.currentData(), 'room');
 	},
 	showAvatar() {
@@ -192,7 +214,6 @@ Template.channelSettingsInfo.helpers({
 	topic() {
 		return Template.instance().room.topic;
 	},
-
 	channelIcon() {
 		return roomTypes.getIcon(Template.instance().room);
 	},
@@ -215,4 +236,9 @@ Template.channelSettingsInfo.helpers({
 
 		return moment.duration(roomMaxAge(Template.instance().room) * 1000 * 60 * 60 * 24).humanize();
 	},
+
+	// #mod
+	// modDiscussionStatus() {
+	// 	return Template.instance().room;
+	// }
 });

@@ -264,6 +264,7 @@ Template.thread.onCreated(async function() {
 
 		this.state.set('loading', true);
 
+		// TODO: ISSUE: Meybe set status getter here
 		const messages = await call('getThreadMessages', { tmid });
 
 		upsertMessageBulk({ msgs: messages }, this.Threads);

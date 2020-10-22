@@ -18,7 +18,9 @@ import { saveRoomTokenpass } from '../functions/saveRoomTokens';
 import { saveStreamingOptions } from '../functions/saveStreamingOptions';
 import { RoomSettingsEnum, roomTypes } from '../../../utils';
 
-const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite'];
+import { modSaveDiscussionStatus } from '../functions/modSaveDiscussionStatus';
+
+const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite', 'modDiscussionStatus'];
 
 const validators = {
 	default({ userId }) {
@@ -104,6 +106,10 @@ const validators = {
 			});
 		}
 	},
+
+	modDiscussionStatus({ userId, value, room, rid }){
+
+	}
 };
 
 const settingSavers = {
@@ -199,12 +205,17 @@ const settingSavers = {
 	roomAvatar({ value, rid, user }) {
 		setRoomAvatar(rid, value, user);
 	},
+	modDiscussionStatus({value, rid, user}) {
+		modSaveDiscussionStatus(rid, value, user);
+	}
 };
 
 Meteor.methods({
 	saveRoomSettings(rid, settings, value) {
 		const userId = Meteor.userId();
-
+		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAA SAVE ROOM SETTINGS. ');
+		console.log('Settings: ', settings);
+		console.log('Value: ', value);
 		if (!userId) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
 				function: 'RocketChat.saveRoomName',
@@ -282,6 +293,7 @@ Meteor.methods({
 			const value = settings[setting];
 
 			const saver = settingSavers[setting];
+			
 			if (saver) {
 				saver({
 					value,

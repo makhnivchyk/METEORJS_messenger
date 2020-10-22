@@ -1174,6 +1174,18 @@ export class Rooms extends Base {
 	countDiscussions() {
 		return this.find({ prid: { $exists: true } }).count();
 	}
+
+	// #mod
+	modSetDiscussionStatusById(_id, modDiscussionStatus){
+		const query = { _id };
+
+		const update = {
+			$set: {
+				'modDiscussionStatus': modDiscussionStatus
+			},
+		};
+		return this.update(query, update);
+	}
 }
 
 export default new Rooms('room', true);
