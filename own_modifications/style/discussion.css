@@ -1,0 +1,27 @@
+.discussion-status span {
+    padding-left:10px;
+    padding-right:10px;
+    padding-top: 2px;
+    padding-bottom:2px;
+}
+
+
+.discussion-status .new {
+    background-color: rgb(245, 228, 197);
+}
+.discussion-status .in_progress {
+    background-color: rgb(255, 255, 112);
+}
+.discussion-status .done {
+    background-color: rgb(154, 255, 154);
+}
+.discussion-status .on_hold {
+    background-color: rgba(144, 144, 255, 0.979);
+    
+}
+.discussion-status .cancelled {
+    background-color: rgb(255, 194, 81);
+}
+.discussion-status .spam {
+    background-color: rgb(255, 72, 72);
+}

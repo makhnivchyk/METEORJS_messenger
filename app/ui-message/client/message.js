@@ -454,7 +454,10 @@ Template.message.helpers({
 			// let modDiscussionStatus = Rooms.findOneById(msg.drid, { modDiscussionStatus:1, _id:0 });
 			// modTODO search only modDiscussionStatus field
 			const room = ChatRoom.findOne({_id: msg.drid});
-			return modDiscussionStatusChoices[room.modDiscussionStatus];
+			return {
+				key:room.modDiscussionStatus, 
+				value: modDiscussionStatusChoices[room.modDiscussionStatus]
+			};
 		}
 		// return room.modDiscussionStatus;
 		// # TOOD: add Rooms.find() for id of message.rid or smth like that.

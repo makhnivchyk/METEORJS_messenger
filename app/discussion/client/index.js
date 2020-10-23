@@ -13,3 +13,6 @@ import '../lib/discussionRoomType';
 
 // Style
 import './public/stylesheets/discussion.css';
+
+// #mod
+import '/own_modifications/style/discussion.css';
