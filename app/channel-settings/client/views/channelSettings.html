@@ -83,7 +83,17 @@
 	</section>
 
 	<div class="rc-user-info__flex rc-user-info__row rc-user-info__room">
-		<button class="rc-button rc-button--outline js-change-room-status" type="submit"> {{_ "Change status"}} </button>
+		{{#if isDiscussion}}
+			<select class=" rc-button--outline js-change-room-status">
+				{{#each modDiscussionStatuses }}
+					{{#if isActiveDiscussionStatus key}}
+						<option value="{{key}}" selected>{{value}}</option>
+					{{else }}
+						<option value="{{key}}">{{value}}</option>
+					{{/if}}
+				{{/each}}
+			</select>
+		{{/if}}
 		{{#if canEditRoom}}
 		<button class="rc-button rc-button--icon rc-button--outline js-edit" type="submit">{{> icon icon='edit'}}{{_ "Edit"}}</button>
 		{{/if}}

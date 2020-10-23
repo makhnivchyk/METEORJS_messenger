@@ -10,6 +10,7 @@ import { hasPermission, hasAllPermission } from '../../../authorization';
 import { roomTypes } from '../../../utils';
 import { ChannelSettings } from '../lib/ChannelSettings';
 import { createTemplateForComponent } from '../../../../client/reactAdapters';
+import { modDiscussionStatusChoices } from '/own_modifications/statusChoices';
 
 // #mod
 // import { saveRoomSettings } from '../server/saveRoomSettings';
@@ -153,27 +154,30 @@ Template.channelSettings.events({
 		return erase(this.rid);
 	},
 	// #mod
-	'click .js-change-room-status'(e, instance) {
-		alert('Change room status here');
-		console.log('Change room status. Instance: ');
-		console.log(instance);
-		// console.log('Current room: ');
-		// console.log(Template.instance());
-		customField = 'Hello world!!!!!!';
-		result = Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', customField);
-		console.log(result);
-		modDiscussionStatus = instance.room.modDiscussionStatus;
-		console.log('Discussion status: ')
-		console.log(modDiscussionStatus)
-	}
+	// 'click .js-change-room-status'(e, instance) {
+	// 	alert('Change room status here');
+	// 	console.log('Change room status. Instance: ');
+	// 	console.log(instance);
+	// 	// console.log('Current room: ');
+	// 	// console.log(Template.instance());
+	// 	customField = 'Hello world!!!!!!';
+	// 	result = Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', customField);
+	// 	console.log(result);
+	// 	modDiscussionStatus = instance.room.modDiscussionStatus;
+	// 	console.log('Discussion status: ')
+	// 	console.log(modDiscussionStatus)
+	// }
+	"change .js-change-room-status"(e, instance) {
+        var discussionStatus = $(e.currentTarget).val();
+		console.log("discussionStatus : " + discussionStatus);
+		Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', discussionStatus);
+        // additional code to do what you want with the category
+    }
 });
 
 
 Template.channelSettingsInfo.onCreated(function() {
 	this.room = ChatRoom.findOne(this.data && this.data.rid);
-	console.log(this.data);
-	console.log(this.rid);
-
 });
 
 Template.channelSettingsInfo.helpers({
@@ -238,7 +242,15 @@ Template.channelSettingsInfo.helpers({
 	},
 
 	// #mod
-	// modDiscussionStatus() {
-	// 	return Template.instance().room;
-	// }
+	modDiscussionStatuses() {
+		var result = [];
+		for (var key in modDiscussionStatusChoices) result.push({key:key,value:modDiscussionStatusChoices[key]});
+		return result;
+	},
+	isActiveDiscussionStatus(discussionStatus) {
+		return discussionStatus === Template.instance().room.modDiscussionStatus;
+	},
+	isDiscussion(){
+		return Boolean(Template.instance().room && Template.instance().room.prid);
+	} 
 });

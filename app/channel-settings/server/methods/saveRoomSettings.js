@@ -19,6 +19,7 @@ import { saveStreamingOptions } from '../functions/saveStreamingOptions';
 import { RoomSettingsEnum, roomTypes } from '../../../utils';
 
 import { modSaveDiscussionStatus } from '../functions/modSaveDiscussionStatus';
+import { modDiscussionStatusChoices } from '/own_modifications/statusChoices'
 
 const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite', 'modDiscussionStatus'];
 
@@ -108,7 +109,19 @@ const validators = {
 	},
 
 	modDiscussionStatus({ userId, value, room, rid }){
-
+		if ( !(value in modDiscussionStatusChoices)){
+			throw new Meteor.Error('error-action-not-allowed', 'You can not choose this status', {
+				method: 'saveRoomSettings',
+				action: 'Editing_room',
+			});
+		}
+		let isDiscussion = Boolean(room && room.prid);
+		if (!isDiscussion){
+			throw new Meteor.Error('error-action-not-allowed', 'You can save status only for discussion', {
+				method: 'saveRoomSettings',
+				action: 'Editing_room',
+			});
+		}
 	}
 };
 

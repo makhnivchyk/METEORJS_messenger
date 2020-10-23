@@ -25,7 +25,7 @@ export async function findAdminRooms({ uid, filter, types = [], pagination: { of
 		archived: 1,
 		tokenpass: 1,
 
-		modDiscussionStatus: 1
+		// modDiscussionStatus: 1
 	};
 
 	const name = filter && filter.trim();
@@ -84,7 +84,7 @@ export async function findAdminRoom({ uid, rid }) {
 		announcement: 1,
 		description: 1,
 
-		modDiscussionStatus: 1
+		// modDiscussionStatus: 1
 	};
 
 	return Rooms.findOneById(rid, { fields });
