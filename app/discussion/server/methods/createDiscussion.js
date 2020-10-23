@@ -8,6 +8,10 @@ import { settings } from '../../../settings/server';
 import { roomTypes } from '../../../utils/server';
 import { callbacks } from '../../../callbacks/server';
 
+// import { modSaveDiscussionStatus } from '../../../channel-settings/server/functions';
+import { modSaveDiscussionStatus } from '../../../channel-settings/server/functions/modSaveDiscussionStatus';
+import { modDefaultStatusKey } from '/own_modifications/statusChoices';
+
 const getParentRoom = (rid) => {
 	const room = Rooms.findOne(rid);
 	return room && (room.prid ? Rooms.findOne(room.prid, { fields: { _id: 1 } }) : room);
@@ -91,6 +95,8 @@ const create = ({ prid, pmid, t_name, reply, users, user }) => {
 		description: message.msg, // TODO discussions remove
 		topic: p_room.name, // TODO discussions remove
 		prid,
+
+		//
 	}, {
 		// overrides name validation to allow anything, because discussion's name is randomly generated
 		nameValidationRegex: /.*/,
@@ -110,6 +116,11 @@ const create = ({ prid, pmid, t_name, reply, users, user }) => {
 	if (reply) {
 		sendMessage(user, { msg: reply }, discussion);
 	}
+
+	// #mod
+	modSaveDiscussionStatus(discussion._id, modDefaultStatusKey);
+	//
+
 	return discussion;
 };
 

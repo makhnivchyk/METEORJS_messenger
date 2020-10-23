@@ -137,6 +137,7 @@
 					{{# if unread }}
 						<div title="{{_ 'Unread' }}" class="message-unread"></div>
 					{{/if}}
+					Status: {{ modCurrentDiscussionStatus }}
 				</div>
 			{{/if}}
 			{{#if $and settings.showReplyButton msg.tcount}}
