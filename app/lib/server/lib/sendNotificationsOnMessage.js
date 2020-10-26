@@ -13,6 +13,9 @@ import { notifyDesktopUser, shouldNotifyDesktop } from '../functions/notificatio
 import { notifyAudioUser, shouldNotifyAudio } from '../functions/notifications/audio';
 import { Notification } from '../../../notification-queue/server/NotificationQueue';
 
+// #mod
+import { sendPostRequestToUrl } from '../../../../own_modifications/functions/sendPostRequestToUrl';
+
 let TroubleshootDisableNotifications;
 
 export const sendNotification = async ({
@@ -185,6 +188,19 @@ export const sendNotification = async ({
 			mid: message._id,
 			items: queueItems,
 		});
+	}
+
+	// #mod send post request when user is mentioned
+	if (hasMentionToUser) {
+		let isDiscussion = room && room.prid;
+		if (isDiscussion){
+			console.log('Got message with mention in discussion: ', notificationMessage);
+			let data = {
+				message: notificationMessage,
+				room: room
+			}
+			sendPostRequestToUrl('https://httpbin.org/anything', data);
+		}
 	}
 };
 

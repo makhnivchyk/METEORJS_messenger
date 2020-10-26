@@ -13,7 +13,7 @@ import { createTemplateForComponent } from '../../../../client/reactAdapters';
 import { modDiscussionStatusChoices } from '/own_modifications/statusChoices';
 
 // #mod
-// import { saveRoomSettings } from '../server/saveRoomSettings';
+import { sendPostRequestToUrl } from '../../../../own_modifications/functions/sendPostRequestToUrl';
 
 createTemplateForComponent('channelSettingsEditing', () => import('../../../../client/channel/ChannelInfo/EditChannel'));
 
@@ -167,11 +167,16 @@ Template.channelSettings.events({
 	// 	console.log('Discussion status: ')
 	// 	console.log(modDiscussionStatus)
 	// }
+	
+	// #mod Handle status change status button and save status
 	"change .js-change-room-status"(e, instance) {
-        var discussionStatus = $(e.currentTarget).val();
-		console.log("discussionStatus : " + discussionStatus);
+		var discussionStatus = $(e.currentTarget).val();
+		data = {
+			'newDiscussionStatus': discussionStatus,
+			'room': instance.room
+		}
+		sendPostRequestToUrl('https://httpbin.org/anything', data);
 		Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', discussionStatus);
-        // additional code to do what you want with the category
     }
 });
 

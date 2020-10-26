@@ -226,9 +226,6 @@ const settingSavers = {
 Meteor.methods({
 	saveRoomSettings(rid, settings, value) {
 		const userId = Meteor.userId();
-		console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAA SAVE ROOM SETTINGS. ');
-		console.log('Settings: ', settings);
-		console.log('Value: ', value);
 		if (!userId) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
 				function: 'RocketChat.saveRoomName',
