@@ -194,7 +194,7 @@ export const sendNotification = async ({
 	if (hasMentionToUser) {
 		let isDiscussion = room && room.prid;
 		if (isDiscussion){
-			console.log('Got message with mention in discussion: ', notificationMessage);
+			console.log('Got message with mention in discussion:', notificationMessage);
 			let data = {
 				message: notificationMessage,
 				room: room
