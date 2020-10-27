@@ -15,7 +15,9 @@ ADD . /not_built_app
 # install meteor and build production ready rocket chat
 RUN cd not_built_app \
     && apt-get -y install curl \
-    && curl https://install.meteor.com/ | sh 
+    && curl https://install.meteor.com/ | sh \
+    && mkdir /built_app \
+    && chown -R rocketchat:rocketchat /built_app
 
 USER rocketchat
 
