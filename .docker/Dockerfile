@@ -5,16 +5,26 @@ LABEL maintainer="buildmaster@rocket.chat"
 # dependencies
 RUN groupadd -g 65533 -r rocketchat \
     && useradd -u 65533 -r -g rocketchat rocketchat \
-    && mkdir -p /app/uploads \
-    && chown rocketchat:rocketchat /app/uploads \
+    && mkdir -p /built_app/uploads \
+    && chown rocketchat:rocketchat /built_app/uploads \
     && apt-get update \
     && apt-get install -y --no-install-recommends fontconfig
 
-ADD . /app
+ADD . /not_built_app
+
+USER rocketchat
+
+# install meteor and build production ready rocket chat
+RUN cd not_built_app \
+    && apt-get -y install curl \
+    && curl https://install.meteor.com/ | sh \  
+    && ls \
+    && meteor build --directory ../built_app/ --allow-superuser \
+    && rm -r ../not_built_app
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
-    && cd /app/bundle/programs/server \
+    && cd /built_app/bundle/programs/server \
     && npm install \
     && apt-mark auto '.*' > /dev/null \
     && apt-mark manual $aptMark > /dev/null \
@@ -27,13 +37,13 @@ RUN aptMark="$(apt-mark showmanual)" \
        | xargs -r apt-mark manual \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && npm cache clear --force \
-    && chown -R rocketchat:rocketchat /app
+    && chown -R rocketchat:rocketchat /built_app
 
-USER rocketchat
+# USER rocketchat
 
-VOLUME /app/uploads
+VOLUME /built_app/uploads
 
-WORKDIR /app/bundle
+WORKDIR /built_app/bundle
 
 # needs a mongoinstance - defaults to container linking with alias 'mongo'
 ENV DEPLOY_METHOD=docker \
@@ -42,7 +52,7 @@ ENV DEPLOY_METHOD=docker \
     HOME=/tmp \
     PORT=3000 \
     ROOT_URL=http://localhost:3000 \
-    Accounts_AvatarStorePath=/app/uploads
+    Accounts_AvatarStorePath=/built_app/uploads
 
 EXPOSE 3000
 
