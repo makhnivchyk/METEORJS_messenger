@@ -16,16 +16,18 @@ ADD . /not_built_app
 RUN cd not_built_app \
     && apt-get -y install curl \
     && curl https://install.meteor.com/ | sh \
-    && chown -R rocketchat:rocketchat /built_app
+    && chown -R rocketchat:rocketchat /tmp
 
 USER rocketchat
 
 RUN cd /not_built_app \
-    && meteor build --directory /built_app/ \
-    && cd .. \
-    && rm -r not_built_app
+    && meteor build --directory /tmp/built_app/ \
+    && cp -rp /tmp/built_app/* /built_app 
 
 USER root
+
+RUN rm -r /not_built_app \
+    && rm -r /tmp/build_app
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
