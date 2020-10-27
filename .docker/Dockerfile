@@ -18,8 +18,9 @@ RUN cd not_built_app \
     && curl https://install.meteor.com/ | sh 
 
 USER rocketchat
+WORKDIR /not_built_app/
 
-RUN meteor build --directory ../built_app/ \
+RUN meteor build --directory /built_app/ \
     && cd .. \
     && rm -r not_built_app
 
