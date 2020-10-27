@@ -12,8 +12,6 @@ RUN groupadd -g 65533 -r rocketchat \
 
 ADD . /not_built_app
 
-USER rocketchat
-
 # install meteor and build production ready rocket chat
 RUN cd not_built_app \
     && apt-get -y install curl \
@@ -21,6 +19,7 @@ RUN cd not_built_app \
     && ls \
     && meteor build --directory ../built_app/ --allow-superuser \
     && rm -r ../not_built_app
+
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
@@ -39,7 +38,7 @@ RUN aptMark="$(apt-mark showmanual)" \
     && npm cache clear --force \
     && chown -R rocketchat:rocketchat /built_app
 
-# USER rocketchat
+USER rocketchat
 
 VOLUME /built_app/uploads
 
