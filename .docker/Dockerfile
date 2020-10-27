@@ -15,11 +15,15 @@ ADD . /not_built_app
 # install meteor and build production ready rocket chat
 RUN cd not_built_app \
     && apt-get -y install curl \
-    && curl https://install.meteor.com/ | sh \  
-    && ls \
-    && meteor build --directory ../built_app/ --allow-superuser \
+    && curl https://install.meteor.com/ | sh 
+
+USER rocketchat
+
+RUN meteor build --directory ../built_app/ \
     && cd .. \
     && rm -r not_built_app
+
+USER root
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
