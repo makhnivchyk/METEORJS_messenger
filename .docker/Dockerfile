@@ -16,7 +16,6 @@ ADD . /not_built_app
 RUN cd not_built_app \
     && apt-get -y install curl \
     && curl https://install.meteor.com/ | sh \
-    && mkdir /built_app \
     && chown -R rocketchat:rocketchat /built_app
 
 USER rocketchat
