@@ -16,8 +16,8 @@ ADD . /not_built_app
 RUN apt-get -y install curl \
     && curl https://install.meteor.com/ | sh \
     && cd /not_built_app \
-    # && chown -R rocketchat:rocketchat /tmp
-    && meteor build --directory /tmp/built_app/ \
+    && meteor update \
+    && meteor build --directory /tmp/built_app/ --allow-superuser \
     && cp -rp /tmp/built_app/* /built_app \
     && rm -r /not_built_app \
     && rm -r /tmp/build_app
