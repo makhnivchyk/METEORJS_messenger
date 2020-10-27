@@ -13,21 +13,24 @@ RUN groupadd -g 65533 -r rocketchat \
 ADD . /not_built_app
 
 # install meteor and build production ready rocket chat
-RUN cd not_built_app \
-    && apt-get -y install curl \
+RUN apt-get -y install curl \
     && curl https://install.meteor.com/ | sh \
-    && chown -R rocketchat:rocketchat /tmp
-
-USER rocketchat
-
-RUN cd /not_built_app \
+    && cd /not_built_app \
+    # && chown -R rocketchat:rocketchat /tmp
     && meteor build --directory /tmp/built_app/ \
-    && cp -rp /tmp/built_app/* /built_app 
-
-USER root
-
-RUN rm -r /not_built_app \
+    && cp -rp /tmp/built_app/* /built_app \
+    && rm -r /not_built_app \
     && rm -r /tmp/build_app
+# USER rocketchat
+
+# RUN cd /not_built_app \
+#     && meteor build --directory /tmp/built_app/ \
+#     && cp -rp /tmp/built_app/* /built_app 
+
+# USER root
+
+# RUN rm -r /not_built_app \
+#     && rm -r /tmp/build_app
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
