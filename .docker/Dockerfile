@@ -12,12 +12,15 @@ RUN groupadd -g 65533 -r rocketchat \
 
 ADD . /not_built_app
 
+ENV METEOR_ALLOW_SUPERUSER = True
+
 # install meteor and build production ready rocket chat
 RUN apt-get -y install curl \
     && curl https://install.meteor.com/ | sh \
     && cd /not_built_app \
     && meteor update \
-    && meteor build --directory /tmp/built_app/ --allow-superuser \
+    && meteor --allow-superuser build --directory /tmp/built_app/ \
+    && sudo chown -Rh rocketchat:rocketchat .meteor/local \
     && cp -rp /tmp/built_app/* /built_app \
     && rm -r /not_built_app \
     && rm -r /tmp/build_app
