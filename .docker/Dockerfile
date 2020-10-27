@@ -18,8 +18,8 @@ RUN cd not_built_app \
     && curl https://install.meteor.com/ | sh \  
     && ls \
     && meteor build --directory ../built_app/ --allow-superuser \
-    && rm -r ../not_built_app
-
+    && cd .. \
+    && rm -r not_built_app
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
