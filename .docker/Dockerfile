@@ -29,6 +29,7 @@ USER rocketchat
 RUN curl https://install.meteor.com/ | sh \
     && PATH=$PATH:$HOME/.meteor \
     && cd /not_built_app/ \
+    && ls \
     && meteor build --directory /built_app/ \
     # && sudo chown -Rh rocketchat:rocketchat .meteor/local \
     # && cp -rp /tmp/built_app/* /built_app \
