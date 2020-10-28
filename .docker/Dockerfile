@@ -6,22 +6,34 @@ LABEL maintainer="buildmaster@rocket.chat"
 RUN groupadd -g 65533 -r rocketchat \
     && useradd -u 65533 -r -g rocketchat rocketchat \
     && mkdir -p /built_app/uploads \
-    && chown rocketchat:rocketchat /built_app/uploads \
+    && chown -R rocketchat:rocketchat /built_app/ \
     && apt-get update \
     && apt-get install -y --no-install-recommends fontconfig
 
 ADD . /not_built_app
 
-# install meteor and build production ready rocket chat
+# install meteor and build production ready rocket chat 
+
 RUN apt-get -y install curl \
     && curl https://install.meteor.com/ | sh \
-    && cd /not_built_app \
+    # && cd /not_built_app \
     && ls \
-    && meteor --allow-superuser build --directory /tmp/built_app/ \
-    && sudo chown -Rh rocketchat:rocketchat .meteor/local \
-    && cp -rp /tmp/built_app/* /built_app \
-    && rm -r /not_built_app \
-    && rm -r /tmp/build_app
+    # && meteor build --directory /tmp/built_app/ \
+    && chown -R rocketchat:rocketchat /not_built_app/ 
+    # && cp -rp /tmp/built_app/* /built_app \
+    # && rm -r /not_built_app \
+    # && rm -r /tmp/build_app
+
+USER rocketchat
+
+RUN cd /not_built_app/ \
+    && meteor build --directory /built_app/ \
+    # && sudo chown -Rh rocketchat:rocketchat .meteor/local \
+    # && cp -rp /tmp/built_app/* /built_app \
+    && rm -r /not_built_app/
+    # && rm -r /tmp/build_app
+
+USER root
 # USER rocketchat
 
 # RUN cd /not_built_app \
@@ -33,7 +45,7 @@ RUN apt-get -y install curl \
 # RUN rm -r /not_built_app \
 #     && rm -r /tmp/build_app
 
-ENV METEOR_ALLOW_SUPER_USER=true
+# ENV METEOR_ALLOW_SUPER_USER=true
 
 RUN aptMark="$(apt-mark showmanual)" \
     && apt-get install -y --no-install-recommends g++ make python ca-certificates \
