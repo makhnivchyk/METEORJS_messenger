@@ -8,7 +8,7 @@ RUN groupadd -g 65533 -r rocketchat \
     && mkdir -p /built_app/uploads \
     && chown -R rocketchat:rocketchat /built_app/ \
     && apt-get update \
-    && apt-get install -y --no-install-recommends fontconfig
+    && apt-get install -y --no-install-recommends fontconfig git
 
 ADD . /not_built_app
 
