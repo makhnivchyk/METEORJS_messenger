@@ -4,7 +4,7 @@ LABEL maintainer="buildmaster@rocket.chat"
 
 # dependencies
 RUN groupadd -g 65533 -r rocketchat \
-    && useradd -u 65533 -r -g rocketchat rocketchat \
+    && useradd -u -m 65533 -r -g rocketchat rocketchat \
     && mkdir -p /built_app/uploads \
     && chown -R rocketchat:rocketchat /built_app/ \
     && apt-get update \
