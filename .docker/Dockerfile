@@ -32,10 +32,10 @@ RUN curl https://install.meteor.com/ | sh \
     && ls \
     && meteor npm install \
     && meteor build --directory /built_app/ \
-    && rm package-lock.json \
+    && rm package-lock.json 
     # && sudo chown -Rh rocketchat:rocketchat .meteor/local \
     # && cp -rp /tmp/built_app/* /built_app \
-    && rm -r /not_built_app/
+    # && rm -r /not_built_app/
     # && rm -r /tmp/build_app
 
 USER root
@@ -67,7 +67,8 @@ RUN aptMark="$(apt-mark showmanual)" \
        | xargs -r apt-mark manual \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && npm cache clear --force \
-    && chown -R rocketchat:rocketchat /built_app
+    && chown -R rocketchat:rocketchat /built_app \
+    && rm -r /not_built_app/
 
 USER rocketchat
 
