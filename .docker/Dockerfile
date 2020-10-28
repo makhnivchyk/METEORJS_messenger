@@ -27,6 +27,7 @@ RUN apt-get -y install curl \
 USER rocketchat
 
 RUN curl https://install.meteor.com/ | sh \
+    && PATH=$PATH:$HOME/.meteor \
     && cd /not_built_app/ \
     && meteor build --directory /built_app/ \
     # && sudo chown -Rh rocketchat:rocketchat .meteor/local \
