@@ -13,9 +13,8 @@ RUN groupadd -g 65533 -r rocketchat \
 ADD . /not_built_app
 
 # install meteor and build production ready rocket chat 
-
 RUN apt-get -y install curl \
-    # && curl https://install.meteor.com/ | sh \
+    && curl https://install.meteor.com/ | sh \
     # && cd /not_built_app \
     # && ls \
     # && meteor build --directory /tmp/built_app/ \
@@ -26,13 +25,13 @@ RUN apt-get -y install curl \
 
 USER rocketchat
 
-RUN curl https://install.meteor.com/ | sh \
-    && PATH=$PATH:$HOME/.meteor \
-    && cd /not_built_app/ \
+# RUN curl https://install.meteor.com/ | sh \
+    # && PATH=$PATH:$HOME/.meteor \
+RUN cd /not_built_app/ \
     && ls \
     && meteor npm install \
-    && meteor build --directory /built_app/ \
-    && rm package-lock.json 
+    && meteor build --directory /built_app/ 
+    # && rm package-lock.json 
     # && sudo chown -Rh rocketchat:rocketchat .meteor/local \
     # && cp -rp /tmp/built_app/* /built_app \
     # && rm -r /not_built_app/
