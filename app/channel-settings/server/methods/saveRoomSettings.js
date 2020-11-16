@@ -107,27 +107,13 @@ const validators = {
 			});
 		}
 	},
-// <<<<<<< HEAD
-
-// =======
 	roomAvatar({ userId, rid }) {
 		if (!hasPermission(userId, 'edit-room-avatar', rid)) {
 			throw new Meteor.Error('error-action-not-allowed', 'Editing a room avatar is not allowed', {
-// >>>>>>> 5f99f3d66b18233a7d856a8ab9b7bde3ebed685e
 				method: 'saveRoomSettings',
 				action: 'Editing_room',
 			});
 		}
-// <<<<<<< HEAD
-	// 	let isDiscussion = Boolean(room && room.prid);
-	// 	if (!isDiscussion){
-	// 		throw new Meteor.Error('error-action-not-allowed', 'You can save status only for discussion', {
-	// 			method: 'saveRoomSettings',
-	// 			action: 'Editing_room',
-	// 		});
-	// 	}
-	// }
-// =======
 	},
 	modDiscussionStatus({ userId, value, room, rid }){
 		if ( !(value in modDiscussionStatusChoices)){
@@ -144,7 +130,6 @@ const validators = {
 			});
 		}
 	},
-// >>>>>>> 5f99f3d66b18233a7d856a8ab9b7bde3ebed685e
 };
 
 const settingSavers = {
