@@ -6,7 +6,7 @@ import { hasPermission } from '../../../app/authorization';
 import { Rooms } from '../../../app/models';
 import { settings } from '../../../app/settings';
 // <<<<<<< HEAD
-import './emitter';
+// import './emitter';
 
 // export const fields = {
 // 	_id: 1,
