@@ -5,6 +5,11 @@
 </h1>
 
 # Intensifly Notes
+## How to make every push:
+With flag --no-verify
+```sh
+git push origin master --no-verify
+```
 ## Get updates from original rocketchat:
 1. create branch for it.
 2. Check out existence git remote with url of rocket chat. If there no it:
