@@ -4,6 +4,35 @@
   The Ultimate Open Source WebChat Platform
 </h1>
 
+# Intensifly Notes
+## Get updates from original rocketchat:
+1. create branch for it.
+2. Check out existence git remote with url of rocket chat. If there no it:
+```sh
+git remote add sync https://github.com/RocketChat/Rocket.Chat
+```
+3. Pull updates
+```sh
+git pull sync master
+```
+4. Merge conflicts
+5. Make commit
+
+## Update docker image and push it 
+1. login to dockerhub from cmd:
+```
+docker login
+```
+1. Build image:
+```sh
+docker build -f ./.docker/Dockerfile -t intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)* .
+```
+2. Wait for a long time... 
+3. push image to dockerhub:
+```sh
+docker push intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)*
+```
+
 [![Rocket.Chat](https://open.rocket.chat/images/join-chat.svg)](https://open.rocket.chat/)
 [![Build Status](https://img.shields.io/travis/RocketChat/Rocket.Chat/master.svg)](https://travis-ci.org/RocketChat/Rocket.Chat)
 [![Project Dependencies](https://david-dm.org/RocketChat/Rocket.Chat.svg)](https://david-dm.org/RocketChat/Rocket.Chat)
