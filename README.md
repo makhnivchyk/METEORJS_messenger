@@ -20,7 +20,7 @@ git remote add sync https://github.com/RocketChat/Rocket.Chat
 ```sh
 git pull sync master
 ```
-4. Merge conflicts
+4. Resolve merge conflicts (it certainly will be)
 5. Make commit
 
 ## Update docker image and push it 
