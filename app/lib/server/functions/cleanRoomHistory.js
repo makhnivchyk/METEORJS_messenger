@@ -5,7 +5,7 @@ import { FileUpload } from '../../../file-upload/server';
 import { Messages, Rooms, Subscriptions } from '../../../models/server';
 import { Notifications } from '../../../notifications/server';
 
-export const cleanRoomHistory = function({ rid, latest = new Date(), oldest = new Date('0001-01-01T00:00:00Z'), inclusive = true, limit = 0, excludePinned = true, ignoreDiscussion = true, filesOnly = false, fromUsers = [], ignoreThreads = true }) {
+export const cleanRoomHistory = function({ rid, latest = new Date(), oldest = new Date('0001-01-01T00:00:00Z'), inclusive = true, limit = 0, excludePinned = true, ignoreDiscussion = true, ignoreTask = true, filesOnly = false, fromUsers = [], ignoreThreads = true }) {
 	const gt = inclusive ? '$gte' : '$gt';
 	const lt = inclusive ? '$lte' : '$lt';
 
@@ -18,6 +18,9 @@ export const cleanRoomHistory = function({ rid, latest = new Date(), oldest = ne
 		rid,
 		excludePinned,
 		ignoreDiscussion,
+		//makhn
+		ignoreTask,
+		//
 		ts,
 		fromUsers,
 		ignoreThreads,
@@ -38,10 +41,16 @@ export const cleanRoomHistory = function({ rid, latest = new Date(), oldest = ne
 		Messages.findDiscussionByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ts, fromUsers, { fields: { drid: 1 }, ...limit && { limit } }, ignoreThreads).fetch()
 			.forEach(({ drid }) => deleteRoom(drid));
 	}
+	//makhn
+	if (!ignoreTask) {
+		Messages.findTaskByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ts, fromUsers, { fields: { taskrid: 1 }, ...limit && { limit } }, ignoreThreads).fetch()
+			.forEach(({ taskrid }) => deleteRoom(taskrid));
+	}
+	//
 
 	if (!ignoreThreads) {
 		const threads = new Set();
-		Messages.findThreadsByRoomIdPinnedTimestampAndUsers({ rid, pinned: excludePinned, ignoreDiscussion, ts, users: fromUsers }, { fields: { _id: 1 } })
+		Messages.findThreadsByRoomIdPinnedTimestampAndUsers({ rid, pinned: excludePinned, ignoreDiscussion, ignoreTask, ts, users: fromUsers }, { fields: { _id: 1 } })
 			.forEach(({ _id }) => threads.add(_id));
 
 		if (threads.size > 0) {
@@ -49,13 +58,14 @@ export const cleanRoomHistory = function({ rid, latest = new Date(), oldest = ne
 		}
 	}
 
-	const count = Messages.removeByIdPinnedTimestampLimitAndUsers(rid, excludePinned, ignoreDiscussion, ts, limit, fromUsers, ignoreThreads);
+	const count = Messages.removeByIdPinnedTimestampLimitAndUsers(rid, excludePinned, ignoreDiscussion, ignoreTask, ts, limit, fromUsers, ignoreThreads);
 	if (count) {
 		Rooms.resetLastMessageById(rid);
 		Notifications.notifyRoom(rid, 'deleteMessageBulk', {
 			rid,
 			excludePinned,
 			ignoreDiscussion,
+			ignoreTask, 
 			ts,
 			users: fromUsers,
 		});

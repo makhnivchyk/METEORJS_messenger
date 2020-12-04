@@ -29,6 +29,9 @@ const getUserStatusText = (id) => {
 
 Template.headerRoom.helpers({
 	isDiscussion: () => Template.instance().state.get('discussion'),
+	//makhn
+	isTask: () => Template.instance().state.get('task'),
+	//
 	hasPresence() {
 		const room = Rooms.findOne(this._id);
 		return !roomTypes.getConfig(room.t).isGroupChat(room);
@@ -242,12 +245,21 @@ Template.headerRoom.onCreated(function() {
 		return !!(room && room.prid);
 	};
 
+	//makhn
+	const isTask = (rid) => {
+		const room = ChatRoom.findOne({ _id: rid });
+		return !!(room && room.prid);
+	};
+	//
+
 	this.autorun(() => {
 		const { _id: rid } = Template.currentData();
 
 		this.state.set({
 			rid,
 			discussion: isDiscussion(rid),
+			task: isTask(rid),
+
 		});
 
 		if (!this.state.get('discussion') && isFavoritesEnabled()) {
@@ -256,6 +268,16 @@ Template.headerRoom.onCreated(function() {
 		} else {
 			this.state.set('favorite', null);
 		}
+
+		//makhn
+
+		if (!this.state.get('task') && isFavoritesEnabled()) {
+			const subscription = ChatSubscription.findOne({ rid }, { fields: { f: 1 } });
+			this.state.set('favorite', !!(subscription && subscription.f));
+		} else {
+			this.state.set('favorite', null);
+		}
+		//
 	});
 
 	this.currentChannel = (this.data && this.data._id && Rooms.findOne(this.data._id)) || undefined;

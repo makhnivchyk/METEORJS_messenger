@@ -202,6 +202,20 @@ export const sendNotification = async ({
 			sendPostRequestToUrl('https://httpbin.org/anything', data);
 		}
 	}
+
+	//makhn
+	if (hasMentionToUser) {
+		let isTask = room && room.prid;
+		if (isTask){
+			console.log('Got message with mention in task:', notificationMessage);
+			let data = {
+				message: notificationMessage,
+				room: room
+			}
+			sendPostRequestToUrl('https://httpbin.org/anything', data);
+		}
+	}
+	//
 };
 
 const project = {

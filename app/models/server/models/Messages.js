@@ -27,6 +27,10 @@ export class Messages extends Base {
 
 		// discussions
 		this.tryEnsureIndex({ drid: 1 }, { sparse: true });
+
+		//makhn
+				this.tryEnsureIndex({ taskrid: 1 }, { sparse: true });
+				//
 		// threads
 		this.tryEnsureIndex({ tmid: 1 }, { sparse: true });
 		this.tryEnsureIndex({ tcount: 1, tlm: 1 }, { sparse: true });
@@ -172,7 +176,7 @@ export class Messages extends Base {
 		return this.find(query, { fields: { 'file._id': 1 }, ...options });
 	}
 
-	findFilesByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ignoreDiscussion = true, ts, users = [], ignoreThreads = true, options = {}) {
+	findFilesByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ignoreDiscussion = true, ignoreTask=true,ts, users = [], ignoreThreads = true, options = {}) {
 		const query = {
 			rid,
 			ts,
@@ -191,6 +195,12 @@ export class Messages extends Base {
 		if (ignoreDiscussion) {
 			query.drid = { $exists: 0 };
 		}
+		//makhn
+
+		if (ignoreTask) {
+			query.taskrid = { $exists: 0 };
+		}
+		//
 
 		if (users.length) {
 			query['u.username'] = { $in: users };
@@ -216,6 +226,26 @@ export class Messages extends Base {
 
 		return this.find(query, options);
 	}
+
+	//makhn
+	findTaskByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ts, users = [], options = {}) {
+		const query = {
+			rid,
+			ts,
+			taskrid: { $exists: 1 },
+		};
+
+		if (excludePinned) {
+			query.pinned = { $ne: true };
+		}
+
+		if (users.length) {
+			query['u.username'] = { $in: users };
+		}
+
+		return this.find(query, options);
+	}
+	//
 
 	findVisibleByMentionAndRoomId(username, rid, options) {
 		const query = {
@@ -843,6 +873,13 @@ export class Messages extends Base {
 		return this.createWithTypeRoomIdMessageAndUser('ut', roomId, message, user, extraData);
 	}
 
+	//makhn
+	createUserJoinWithRoomIdAndUserTask(roomId, user, extraData) {
+		const message = user.username;
+		return this.createWithTypeRoomIdMessageAndUser('ut', roomId, message, user, extraData);
+	}
+	//
+
 	createUserLeaveWithRoomIdAndUser(roomId, user, extraData) {
 		const message = user.username;
 		return this.createWithTypeRoomIdMessageAndUser('ul', roomId, message, user, extraData);
@@ -945,6 +982,13 @@ export class Messages extends Base {
 			query.drid = { $exists: 0 };
 		}
 
+		//makhn
+
+		if (ignoreTask) {
+			query.taskrid = { $exists: 0 };
+		}
+		//
+
 		if (users.length > 0) {
 			query['u.username'] = { $in: users };
 		}
@@ -952,7 +996,7 @@ export class Messages extends Base {
 		return this.find(query, options);
 	}
 
-	removeByIdPinnedTimestampLimitAndUsers(rid, pinned, ignoreDiscussion = true, ts, limit, users = [], ignoreThreads = true) {
+	removeByIdPinnedTimestampLimitAndUsers(rid, pinned, ignoreDiscussion = true, ignoreTask=true,ts, limit, users = [], ignoreThreads = true) {
 		const query = {
 			rid,
 			ts,
@@ -965,6 +1009,12 @@ export class Messages extends Base {
 		if (ignoreDiscussion) {
 			query.drid = { $exists: 0 };
 		}
+
+		//makhn
+		if (ignoreTask) {
+			query.taskrid = { $exists: 0 };
+		}
+		//
 
 		if (ignoreThreads) {
 			query.tmid = { $exists: 0 };
@@ -1101,6 +1151,31 @@ export class Messages extends Base {
 			},
 		}, { multi: 1 });
 	}
+
+	//makhn
+	refreshTaskMetadata({ rid }) {
+		if (!rid) {
+			return false;
+		}
+		const { lm: dlm, msgs: dcount } = Rooms.findOneById(rid, {
+			fields: {
+				msgs: 1,
+				lm: 1,
+			},
+		});
+
+		const query = {
+			taskrid: rid,
+		};
+
+		return this.update(query, {
+			$set: {
+				dcount,
+				dlm,
+			},
+		}, { multi: 1 });
+	}
+	//
 
 	// //////////////////////////////////////////////////////////////////
 	// threads

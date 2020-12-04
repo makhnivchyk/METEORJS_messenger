@@ -95,6 +95,19 @@
 		</select>
 	{{/if}}
 
+	<!--makhn-->
+	{{#if isTask}}
+	<select class="task-status-dropdown js-change-room-status">
+		{{#each modTaskStatuses }}
+			{{#if isActiveTaskStatus key}}
+				<option value="{{key}}" selected style="display: block !important;">{{value}}</option>
+			{{else }}
+				<option value="{{key}}" style="display: block !important;">{{value}}</option>
+			{{/if}}
+		{{/each}}
+	</select>
+{{/if}}
+	<!---->
 	<div class="rc-user-info__flex rc-user-info__row rc-user-info__room">
 		{{#if canEditRoom}}
 		<button class="rc-button rc-button--icon rc-button--outline js-edit" type="submit">{{> icon icon='edit'}}{{_ "Edit"}}</button>

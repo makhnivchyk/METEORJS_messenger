@@ -6,6 +6,12 @@ createTemplateForComponent('DiscussionMessageList', () => import('./Discussions/
 	renderContainerView: () => HTML.DIV({ class: 'contextual-bar' }), // eslint-disable-line new-cap
 });
 
+//makhn
+createTemplateForComponent('TaskMessageList', () => import('./Tasks/ContextualBar/List'), {
+	renderContainerView: () => HTML.DIV({ class: 'contextual-bar' }), // eslint-disable-line new-cap
+});
+//
+
 createTemplateForComponent('ThreadsList', () => import('./Threads/ContextualBar/List'), {
 	renderContainerView: () => HTML.DIV({ class: 'contextual-bar' }), // eslint-disable-line new-cap
 });

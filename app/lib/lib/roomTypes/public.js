@@ -140,4 +140,9 @@ export class PublicRoomType extends RoomTypeConfig {
 	getDiscussionType() {
 		return 'c';
 	}
+	//makhn
+	getTaskType() {
+		return 'c';
+	}
+	//
 }

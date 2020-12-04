@@ -364,6 +364,18 @@ export class Rooms extends Base {
 		return this.find(query, options);
 	}
 
+	//makhn
+	findByTypes(types, task = false, options = {}) {
+		const query = {
+			t: {
+				$in: types,
+			},
+			prid: { $exists: task },
+		};
+		return this.find(query, options);
+	}
+	//
+
 	findByUserId(userId, options) {
 		const query = { 'u._id': userId };
 
@@ -1159,6 +1171,25 @@ export class Rooms extends Base {
 		return this.find(query, options);
 	}
 
+	//makhn
+	findTaskParentByNameStarting(name, options) {
+		const nameRegex = new RegExp(`^${ s.trim(s.escapeRegExp(name)) }`, 'i');
+
+		const query = {
+			t: {
+				$in: ['c'],
+			},
+			name: nameRegex,
+			archived: { $ne: true },
+			prid: {
+				$exists: false,
+			},
+		};
+
+		return this.find(query, options);
+	}
+	//
+
 	setLinkMessageById(_id, linkMessageId) {
 		const query = { _id };
 
@@ -1175,6 +1206,12 @@ export class Rooms extends Base {
 		return this.find({ prid: { $exists: true } }).count();
 	}
 
+	//makhn
+	countTasks() {
+		return this.find({ prid: { $exists: true } }).count();
+	}
+	//
+
 	// #mod
 	modSetDiscussionStatusById(_id, modDiscussionStatus){
 		const query = { _id };
@@ -1186,6 +1223,18 @@ export class Rooms extends Base {
 		};
 		return this.update(query, update);
 	}
+	//makhn
+	modSetTaskStatusById(_id, modTaskStatus){
+		const query = { _id };
+
+		const update = {
+			$set: {
+				'modTaskStatus': modTaskStatus
+			},
+		};
+		return this.update(query, update);
+	}
+	//
 }
 
 export default new Rooms('room', true);

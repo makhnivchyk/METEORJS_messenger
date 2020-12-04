@@ -12,6 +12,13 @@
 				</div>
 			{{/if}}
 
+			<!--makhn-->
+			{{#if isTask}}
+			<div class="rc-header__block rc-header__block--action js-open-parent-channel" title={{_ "Back_to_room"}}>
+				<span class="rc-header__first-icon">{{> icon block="rc-header__icon rc-header__icon" icon="back"}}</span>
+			</div>
+		{{/if}}
+
 			{{#if isToggleFavoriteButtonVisible}}
 				<div class="rc-header__block rc-header__favorite rc-header__block--action">
 					<button title="{{toggleFavoriteButtonIconLabel}}" type="button" class="rc-header__toggle-favorite {{#if isToggleFavoriteButtonChecked}}rc-header__toggle-favorite--checked{{/if}} rc-header__first-icon js-favorite">

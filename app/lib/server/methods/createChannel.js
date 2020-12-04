@@ -18,4 +18,19 @@ Meteor.methods({
 		}
 		return createRoom('c', name, Meteor.user() && Meteor.user().username, members, readOnly, { customFields, ...extraData });
 	},
+	//makhn
+	// createTask(name, members, readOnly = false, customFields = {}, extraData = {}) {
+	// 	check(name, String);
+	// 	check(members, Match.Optional([String]));
+
+	// 	if (!Meteor.userId()) {
+	// 		throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'createTask' });
+	// 	}
+
+	// 	if (!hasPermission(Meteor.userId(), 'create-task')) {
+	// 		throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'createTask' });
+	// 	}
+	// 	return createRoom('task', name, Meteor.user() && Meteor.user().username, members, readOnly, { customFields, ...extraData });
+	// },
+	//
 });

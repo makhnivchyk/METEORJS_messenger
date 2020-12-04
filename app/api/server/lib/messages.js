@@ -140,3 +140,30 @@ export async function findDiscussionsFromRoom({ uid, roomId, text, pagination: {
 		total,
 	};
 }
+
+//makhn
+export async function findTasksFromRoom({ uid, roomId, text, pagination: { offset, count, sort } }) {
+	const room = await Rooms.findOneById(roomId);
+
+	if (!await canAccessRoomAsync(room, { _id: uid })) {
+		throw new Error('error-not-allowed');
+	}
+
+	const cursor = Messages.findTasksByRoomAndText(roomId, text, {
+		sort: sort || { ts: -1 },
+		skip: offset,
+		limit: count,
+	});
+
+	const total = await cursor.count();
+
+	const messages = await cursor.toArray();
+
+	return {
+		messages,
+		count: messages.length,
+		offset,
+		total,
+	};
+}
+//

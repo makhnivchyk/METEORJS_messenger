@@ -25,6 +25,7 @@ Template.roomList.helpers({
 				'settings.preferences.sidebarShowFavorites': 1,
 				'settings.preferences.sidebarShowUnread': 1,
 				'settings.preferences.sidebarShowDiscussion': 1,
+				'settings.preferences.sidebarShowTask': 1,
 				'services.tokenpass': 1,
 				messageViewMode: 1,
 			},
@@ -68,7 +69,12 @@ Template.roomList.helpers({
 				types = ['c', 'p', 'd'];
 				query.prid = { $exists: true };
 			}
-
+			//makhn
+			if (this.identifier === 'task') {
+				types = ['c', 'p', 'd'];
+				query.prid = { $exists: true };
+			}
+//
 			if (this.identifier === 'tokens') {
 				types = ['c', 'p'];
 			}
@@ -83,6 +89,11 @@ Template.roomList.helpers({
 			if (getUserPreference(user, 'sidebarShowDiscussion')) {
 				query.prid = { $exists: false };
 			}
+			//makhn
+			if (getUserPreference(user, 'sidebarShowTask')) {
+				query.prid = { $exists: false };
+			}
+			//
 
 			if (getUserPreference(user, 'sidebarShowUnread')) {
 				query.$or = [

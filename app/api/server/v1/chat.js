@@ -12,7 +12,7 @@ import Rooms from '../../../models/server/models/Rooms';
 import Users from '../../../models/server/models/Users';
 import Subscriptions from '../../../models/server/models/Subscriptions';
 import { settings } from '../../../settings';
-import { findMentionedMessages, findStarredMessages, findSnippetedMessageById, findSnippetedMessages, findDiscussionsFromRoom } from '../lib/messages';
+import { findMentionedMessages, findStarredMessages, findSnippetedMessageById, findSnippetedMessages, findDiscussionsFromRoom, findTasksFromRoom } from '../lib/messages';
 
 API.v1.addRoute('chat.delete', { authRequired: true }, {
 	post() {
@@ -718,3 +718,28 @@ API.v1.addRoute('chat.getDiscussions', { authRequired: true }, {
 		return API.v1.success(messages);
 	},
 });
+
+//makhn
+API.v1.addRoute('chat.getTasks', { authRequired: true }, {
+	get() {
+		const { roomId, text } = this.queryParams;
+		const { sort } = this.parseJsonQuery();
+		const { offset, count } = this.getPaginationItems();
+
+		if (!roomId) {
+			throw new Meteor.Error('error-invalid-params', 'The required "roomId" query param is missing.');
+		}
+		const messages = Promise.await(findTasksFromRoom({
+			uid: this.userId,
+			roomId,
+			text,
+			pagination: {
+				offset,
+				count,
+				sort,
+			},
+		}));
+		return API.v1.success(messages);
+	},
+});
+//

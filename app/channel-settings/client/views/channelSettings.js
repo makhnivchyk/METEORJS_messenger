@@ -10,7 +10,9 @@ import { hasPermission, hasAllPermission } from '../../../authorization';
 import { roomTypes } from '../../../utils';
 import { ChannelSettings } from '../lib/ChannelSettings';
 import { createTemplateForComponent } from '../../../../client/reactAdapters';
-import { modDiscussionStatusChoices } from '/own_modifications/statusChoices';
+//makhn
+import { modDiscussionStatusChoices , modTaskStatusChoices} from '/own_modifications/statusChoices';
+//
 
 // #mod
 import { sendPostRequestToUrl } from '../../../../own_modifications/functions/sendPostRequestToUrl';
@@ -256,6 +258,18 @@ Template.channelSettingsInfo.helpers({
 		return discussionStatus === Template.instance().room.modDiscussionStatus;
 	},
 	isDiscussion(){
+		return Boolean(Template.instance().room && Template.instance().room.prid);
+	} ,
+//makhn
+	modTaskStatuses() {
+		var result = [];
+		for (var key in modTaskStatusChoices) result.push({key:key,value:modTaskStatusChoices[key]});
+		return result;
+	},
+	isActiveTaskStatus(taskStatus) {
+		return taskStatus === Template.instance().room.modTaskStatus;
+	},
+	isTask(){
 		return Boolean(Template.instance().room && Template.instance().room.prid);
 	} 
 });

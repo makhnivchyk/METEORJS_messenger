@@ -23,7 +23,7 @@ const getRoomName = function() {
 	return t('conversation_with_s', roomTypes.getRoomName(room.t, room));
 };
 
-const purgeWorker = function(roomId, oldest, latest, inclusive, limit, excludePinned, ignoreDiscussion, filesOnly, fromUsers, ignoreThreads) {
+const purgeWorker = function(roomId, oldest, latest, inclusive, limit, excludePinned, ignoreDiscussion, ignoreTask, filesOnly, fromUsers, ignoreThreads) {
 	return call('cleanRoomHistory', {
 		roomId,
 		latest,
@@ -32,6 +32,7 @@ const purgeWorker = function(roomId, oldest, latest, inclusive, limit, excludePi
 		limit,
 		excludePinned,
 		ignoreDiscussion,
+		ignoreTask,
 		filesOnly,
 		fromUsers,
 		ignoreThreads,
@@ -122,6 +123,10 @@ Template.cleanHistory.onCreated(function() {
 	this.cleanHistoryFilesOnly = new ReactiveVar(false);
 
 	this.ignoreDiscussion = new ReactiveVar(false);
+
+	//makhn
+	this.ignoreTask = new ReactiveVar(false);
+	//
 	this.ignoreThreads = new ReactiveVar(false);
 
 	this.cleanHistoryBusy = new ReactiveVar(false);
@@ -258,6 +263,11 @@ Template.cleanHistory.events({
 	'change [name=ignoreDiscussion]'(e, instance) {
 		instance.ignoreDiscussion.set(e.target.checked);
 	},
+	//makhn
+	'change [name=ignoreTask]'(e, instance) {
+		instance.ignoreTask.set(e.target.checked);
+	},
+	//
 	'change [name=ignoreThreads]'(e, instance) {
 		instance.ignoreThreads.set(e.target.checked);
 	},
@@ -283,6 +293,10 @@ Template.cleanHistory.events({
 			const metaCleanHistoryExcludePinned = instance.cleanHistoryExcludePinned.get();
 			const metaCleanHistoryFilesOnly = instance.cleanHistoryFilesOnly.get();
 			const ignoreDiscussion = instance.ignoreDiscussion.get();
+
+			//makhn
+			const ignoreTask = instance.ignoreTask.get();
+			//
 			const ignoreThreads = instance.ignoreThreads.get();
 
 			let fromDate = new Date('0001-01-01T00:00:00Z');
@@ -302,7 +316,7 @@ Template.cleanHistory.events({
 			let count = 0;
 			let result;
 			do {
-				result = await purgeWorker(roomId, fromDate, toDate, metaCleanHistoryInclusive, limit, metaCleanHistoryExcludePinned, ignoreDiscussion, metaCleanHistoryFilesOnly, users, ignoreThreads); // eslint-disable-line no-await-in-loop
+				result = await purgeWorker(roomId, fromDate, toDate, metaCleanHistoryInclusive, limit, metaCleanHistoryExcludePinned, ignoreDiscussion, ignoreTask, metaCleanHistoryFilesOnly, users, ignoreThreads); // eslint-disable-line no-await-in-loop
 				count += result;
 			} while (result === limit);
 

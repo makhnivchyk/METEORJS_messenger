@@ -9,6 +9,8 @@ import { fileUpload } from '../../../ui';
 import { settings } from '../../../settings';
 import { t } from '../../../utils';
 import { mime } from '../../../utils/lib/mimeTypes';
+//makhn
+import '../../../task/client/index';
 
 messageBox.actions.add('Create_new', 'Video_message', {
 	id: 'video-message',
