@@ -105,6 +105,9 @@ const userPreferences = {
 	sidebarGroupByType: true,
 	sidebarShowFavorites: true,
 	sidebarShowDiscussion: true,
+	//makhn
+	sidebarShowTask: true,
+	//
 	sidebarShowUnread: true,
 	sidebarSortby: 'activity',
 };

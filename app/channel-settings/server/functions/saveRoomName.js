@@ -8,9 +8,21 @@ const updateRoomName = (rid, displayName, isDiscussion) => {
 	if (isDiscussion) {
 		return Rooms.setFnameById(rid, displayName) && Subscriptions.updateFnameByRoomId(rid, displayName);
 	}
+	
 	const slugifiedRoomName = getValidRoomName(displayName, rid);
 	return Rooms.setNameById(rid, slugifiedRoomName, displayName) && Subscriptions.updateNameAndAlertByRoomId(rid, slugifiedRoomName, displayName);
 };
+
+//makhn
+const taskupdateRoomName = (rid, displayName, isTask) => {
+	if (isTask) {
+		return Rooms.setFnameById(rid, displayName) && Subscriptions.updateFnameByRoomId(rid, displayName);
+	}
+	
+	const slugifiedRoomName = getValidRoomName(displayName, rid);
+	return Rooms.setNameById(rid, slugifiedRoomName, displayName) && Subscriptions.updateNameAndAlertByRoomId(rid, slugifiedRoomName, displayName);
+};
+//
 
 export const saveRoomName = function(rid, displayName, user, sendMessage = true) {
 	const room = Rooms.findOneById(rid);
@@ -23,7 +35,17 @@ export const saveRoomName = function(rid, displayName, user, sendMessage = true)
 		return;
 	}
 	const isDiscussion = Boolean(room && room.prid);
+	//makhn
+	const isTask = Boolean(room && room.isTask);
+	//
 	const update = updateRoomName(rid, displayName, isDiscussion);
+
+	//makhn
+const taskupdate = taskupdateRoomName(rid, displayName, isTask);
+if(!taskupdate){
+	return;
+}
+	//
 	if (!update) {
 		return;
 	}

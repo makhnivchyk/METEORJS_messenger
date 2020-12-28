@@ -99,17 +99,17 @@ Template.CreateTask.events({
 		const parentChannel = instance.parentChannel.get();
 
 		const { pmid } = instance;
-		const t_name = instance.taskName.get();
+		const taskt_name = instance.taskName.get();
 		const users = instance.selectedUsers.get().map(({ username }) => username).filter((value, index, self) => self.indexOf(value) === index);
 
-		const prid = instance.parentChannelId.get();
+		const isTask = instance.parentChannelId.get();
 		const reply = instance.reply.get();
 
-		if (!prid) {
+		if (!isTask) {
 			const errorText = TAPi18n.__('Invalid_room_name', `${ parentChannel }...`);
 			return toastr.error(errorText);
 		}
-		const result = await call('createTask', { prid, pmid, t_name, reply, users });
+		const result = await call('createTask', { isTask, pmid, taskt_name, reply, users });
 		// callback to enable tracking
 		callbacks.run('afterTask', Meteor.user(), result);
 
@@ -123,7 +123,7 @@ Template.CreateTask.events({
 
 Template.CreateTask.onRendered(function() {
 	this.find(this.data.rid ? '#task_name' : '#parentChannel').focus();
-});
+})
 
 const suggestName = (msg = '') => msg.substr(0, 140);
 
@@ -133,7 +133,7 @@ Template.CreateTask.onCreated(function() {
 	const parentRoom = rid && ChatSubscription.findOne({ rid });
 
 	// if creating a discussion from inside a discussion, uses the same channel as parent channel
-	const room = parentRoom && parentRoom.prid ? ChatSubscription.findOne({ rid: parentRoom.prid }) : parentRoom;
+	const room = parentRoom && parentRoom.isTask ? ChatSubscription.findOne({ rid: parentRoom.isTask }) : parentRoom;
 
 	if (room) {
 		room.text = room.name;

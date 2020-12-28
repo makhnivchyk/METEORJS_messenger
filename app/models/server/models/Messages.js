@@ -29,7 +29,7 @@ export class Messages extends Base {
 		this.tryEnsureIndex({ drid: 1 }, { sparse: true });
 
 		//makhn
-				this.tryEnsureIndex({ taskrid: 1 }, { sparse: true });
+				this.tryEnsureIndex({ drid: 1 }, { sparse: true });
 				//
 		// threads
 		this.tryEnsureIndex({ tmid: 1 }, { sparse: true });
@@ -198,7 +198,7 @@ export class Messages extends Base {
 		//makhn
 
 		if (ignoreTask) {
-			query.taskrid = { $exists: 0 };
+			query.drid = { $exists: 0 };
 		}
 		//
 
@@ -232,7 +232,7 @@ export class Messages extends Base {
 		const query = {
 			rid,
 			ts,
-			taskrid: { $exists: 1 },
+			drid: { $exists: 1 },
 		};
 
 		if (excludePinned) {
@@ -985,7 +985,7 @@ export class Messages extends Base {
 		//makhn
 
 		if (ignoreTask) {
-			query.taskrid = { $exists: 0 };
+			query.drid = { $exists: 0 };
 		}
 		//
 
@@ -1012,7 +1012,7 @@ export class Messages extends Base {
 
 		//makhn
 		if (ignoreTask) {
-			query.taskrid = { $exists: 0 };
+			query.drid = { $exists: 0 };
 		}
 		//
 
@@ -1165,7 +1165,7 @@ export class Messages extends Base {
 		});
 
 		const query = {
-			taskrid: rid,
+			drid: rid,
 		};
 
 		return this.update(query, {

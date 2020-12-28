@@ -4,7 +4,7 @@ export class TaskRoomType extends RoomTypeConfig {
 	constructor() {
 		super({
 			identifier: 'task',
-			order: 25,
+			order: 26,
 			label: 'Task',
 		});
 	}

@@ -1,4 +1,4 @@
-export const modDefaultStatusKey = 'new';
+ export const modDefaultStatusKey = 'new';
 export const modDiscussionStatusChoices = {
     new: 'New',
     in_progress: 'In progres',
@@ -17,3 +17,4 @@ export const modTaskStatusChoices = {
     spam: 'Spam'
 };
 //
+

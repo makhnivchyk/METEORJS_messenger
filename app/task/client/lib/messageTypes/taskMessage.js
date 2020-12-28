@@ -9,7 +9,7 @@ Meteor.startup(function() {
 		message: 'task-created',
 		data(message) {
 			return {
-				message: `<svg class="rc-icon" aria-hidden="true"><use xlink:href="#icon-task"></use></svg> ${ message.msg }`,
+				message: `<svg class="rc-icon" aria-hidden="true"><use xlink:href="#icon-bell"></use></svg> ${ message.msg }`,
 			};
 		},
 	});

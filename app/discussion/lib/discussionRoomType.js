@@ -4,7 +4,7 @@ export class DiscussionRoomType extends RoomTypeConfig {
 	constructor() {
 		super({
 			identifier: 't',
-			order: 25,
+			order: 26,
 			label: 'Discussion',
 		});
 	}

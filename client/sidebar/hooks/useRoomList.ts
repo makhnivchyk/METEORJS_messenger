@@ -49,9 +49,9 @@ export const useRoomList = (): Array<ISubscription> => {
 
 			if (showDiscussion && room.prid) {
 				return discussion.add(room);
-			}
-			//makhn
-			if (showTask && room.prid) {
+			} 
+			//makhn change 15.12.2020 23:04 24/12/2020
+			if (showTask && room.isTask) {
 				return task.add(room);
 			}
 			//

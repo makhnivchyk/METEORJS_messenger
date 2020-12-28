@@ -84,7 +84,7 @@
 
 
 	{{#if isDiscussion}}
-		<select class="discussion-status-dropdown js-change-room-status">
+		<select class="discussion-status-dropdown js-change-room-status-discussion">
 			{{#each modDiscussionStatuses }}
 				{{#if isActiveDiscussionStatus key}}
 					<option value="{{key}}" selected style="display: block !important;">{{value}}</option>
@@ -97,7 +97,7 @@
 
 	<!--makhn-->
 	{{#if isTask}}
-	<select class="task-status-dropdown js-change-room-status">
+	<select class="task-status-dropdown js-change-room-status-task">
 		{{#each modTaskStatuses }}
 			{{#if isActiveTaskStatus key}}
 				<option value="{{key}}" selected style="display: block !important;">{{value}}</option>

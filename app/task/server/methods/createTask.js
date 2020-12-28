@@ -14,14 +14,14 @@ import { modDefaultStatusKey } from '/own_modifications/statusChoices';
 
 const getParentRoom = (rid) => {
 	const room = Rooms.findOne(rid);
-	return room && (room.prid ? Rooms.findOne(room.prid, { fields: { _id: 1 } }) : room);
+	return room && (room.isTask ? Rooms.findOne(room.isTask, { fields: { _id: 1 } }) : room);
 };
 
-const createTaskMessage = (rid, user, taskrid, msg, message_embedded) => {
+const createTaskMessage = (rid, user, drid, msg, message_embedded) => {
 	const welcomeMessage = {
 		msg,
 		rid,
-		taskrid,
+		drid,
 		attachments: [message_embedded].filter((e) => e),
 	};
 	return Messages.createWithTypeRoomIdMessageAndUser('task-created', rid, '', user, welcomeMessage);
@@ -39,42 +39,42 @@ const mentionMessage = (rid, { _id, username, name }, message_embedded) => {
 	return Messages.insert(welcomeMessage);
 };
 
-const create = ({ prid, pmid, t_name, reply, users, user }) => {
+const create = ({ isTask,pmid, taskt_name, reply, users, user }) => {
 	// if you set both, prid and pmid, and the rooms doesnt match... should throw an error)
 	let message = false;
 	if (pmid) {
-		message = Messages.findOne({ _id: pmid });
+		message = Messages.findOne({ _id: pmid }); 
 		if (!message) {
 			throw new Meteor.Error('error-invalid-message', 'Invalid message', { method: 'TaskCreation' });
 		}
-		if (prid) {
-			if (prid !== getParentRoom(message.rid)._id) {
+		if (isTask) {
+			if (isTask !== getParentRoom(message.rid)._id) {
 				throw new Meteor.Error('error-invalid-arguments', { method: 'TaskCreation' });
 			}
 		} else {
-			prid = message.rid;
+			isTask = message.rid;
 		}
 	}
 
-	if (!prid) {
+	if (!isTask) {
 		throw new Meteor.Error('error-invalid-arguments', { method: 'TaskCreation' });
 	}
 
 	let p_room;
 	try {
-		p_room = canSendMessage(prid, { uid: user._id, username: user.username, type: user.type });
+		p_room = canSendMessage(isTask, { uid: user._id, username: user.username, type: user.type });
 	} catch (error) {
 		throw new Meteor.Error(error.message);
 	}
 
-	if (p_room.prid) {
+	if (p_room.isTask) {
 		throw new Meteor.Error('error-nested-task', 'Cannot create nested tasks', { method: 'TaskCreation' });
 	}
 
 	if (pmid) {
 		const taskAlreadyExists = Rooms.findOne({
-			prid,
-			pmid,
+			isTask,
+		    pmid,
 		}, {
 			fields: { _id: 1 },
 		});
@@ -91,10 +91,11 @@ const create = ({ prid, pmid, t_name, reply, users, user }) => {
 
 	const type = roomTypes.getConfig(p_room.t).getTaskType();
 	const task = createRoom(type, name, user.username, [...new Set(invitedUsers)], false, {
-		fname: t_name,
+		isTask: true,
+		fname: taskt_name,
 		description: message.msg, // TODO discussions remove
 		topic: p_room.name, // TODO discussions remove
-		prid,
+		isTask,
 
 		//
 	}, {
@@ -106,9 +107,9 @@ const create = ({ prid, pmid, t_name, reply, users, user }) => {
 	if (pmid) {
 		mentionMessage(task._id, user, attachMessage(message, p_room));
 
-		taskMsg = createTaskMessage(message.rid, user, task._id, t_name, attachMessage(message, p_room));
+		taskMsg = createTaskMessage(message.rid, user, task._id, taskt_name, attachMessage(message, p_room));
 	} else {
-		taskMsg = createTaskMessage(prid, user, task._id, t_name);
+		taskMsg = createTaskMessage(isTask, user, task._id, taskt_name);
 	}
 
 	callbacks.runAsync('afterSaveMessage', taskMsg, p_room, user._id);
@@ -126,15 +127,15 @@ const create = ({ prid, pmid, t_name, reply, users, user }) => {
 
 Meteor.methods({
 	/**
-	* Create discussion by room or message
+	* Create task by room or message
 	* @constructor
-	* @param {string} prid - Parent Room Id - The room id, optional if you send pmid.
-	* @param {string} pmid - Parent Message Id - Create the discussion by a message, optional.
+	* @param {string} isTask - Parent Room Id - The room id, optional if you send pmid.
+	* @param {string} pmid - Parent Message Id - Create the task by a message, optional.
 	* @param {string} reply - The reply, optional
-	* @param {string} t_name - discussion name
+	* @param {string} taskt_name - task name
 	* @param {string[]} users - users to be added
 	*/
-	createTask({ prid, pmid, t_name, reply, users }) {
+	createTask({ isTask, pmid, taskt_name, reply, users }) {
 		if (!settings.get('Task_enabled')) {
 			throw new Meteor.Error('error-action-not-allowed', 'You are not allowed to create a task', { method: 'createTask' });
 		}
@@ -148,6 +149,6 @@ Meteor.methods({
 			throw new Meteor.Error('error-action-not-allowed', 'You are not allowed to create a task', { method: 'createTask' });
 		}
 
-		return create({ uid, prid, pmid, t_name, reply, users, user: Meteor.user() });
+		return create({ uid, isTask, pmid, taskt_name, reply, users, user: Meteor.user() });
 	},
 });

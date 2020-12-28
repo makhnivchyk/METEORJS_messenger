@@ -43,8 +43,8 @@ export const cleanRoomHistory = function({ rid, latest = new Date(), oldest = ne
 	}
 	//makhn
 	if (!ignoreTask) {
-		Messages.findTaskByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ts, fromUsers, { fields: { taskrid: 1 }, ...limit && { limit } }, ignoreThreads).fetch()
-			.forEach(({ taskrid }) => deleteRoom(taskrid));
+		Messages.findTaskByRoomIdPinnedTimestampAndUsers(rid, excludePinned, ts, fromUsers, { fields: { drid: 1 }, ...limit && { limit } }, ignoreThreads).fetch()
+			.forEach(({ drid }) => deleteRoom(drid));
 	}
 	//
 

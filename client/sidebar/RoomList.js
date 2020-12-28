@@ -174,6 +174,7 @@ export const SideBarItemTemplateWithData = React.memo(function SideBarItemTempla
 		groupMentions,
 		tunread = [],
 		tunreadUser = [],
+		isTask,
 		rid,
 		t: type,
 		cl,

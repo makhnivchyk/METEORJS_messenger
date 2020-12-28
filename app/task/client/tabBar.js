@@ -8,7 +8,7 @@ Meteor.startup(function() {
 		groups: ['channel', 'group', 'direct'],
 		id: 'task',
 		i18nTitle: 'Tasks',
-		icon: 'task',
+		icon: 'bell',
 		template: 'tasksTabbar',
 		full: true,
 		order: 1,

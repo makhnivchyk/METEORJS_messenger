@@ -39,7 +39,7 @@ const onDeleteMessageBulkStream = ({ rid, ts, excludePinned, ignoreDiscussion, i
 	}
 	//makhn
 	if (ignoreTask) {
-		query.taskrid = { $exists: false };
+		query.drid = { $exists: false };
 	}
 	//
 	if (users && users.length) {

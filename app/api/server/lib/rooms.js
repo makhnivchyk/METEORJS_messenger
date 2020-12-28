@@ -59,13 +59,13 @@ export async function findAdminRooms({ uid, filter, types = [], pagination: { of
 }
 
 
-//makhn
+// makhn 24/12/2020
 export async function findAdminRoomsTask({ uid, filter, types = [], pagination: { offset, count, sort } }) {
 	if (!await hasPermissionAsync(uid, 'view-room-administration')) {
 		throw new Error('error-not-authorized');
 	}
 	const fields = {
-		prid: 1,
+		isTask: 1,
 		fname: 1,
 		name: 1,
 		t: 1,

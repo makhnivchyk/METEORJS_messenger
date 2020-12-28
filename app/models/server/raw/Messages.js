@@ -50,7 +50,7 @@ export class MessagesRaw extends BaseRaw {
 
 //makhn
 findTasksByRoom(rid, options) {
-	const query = { rid, taskrid: { $exists: true } };
+	const query = { rid, drid: { $exists: true } };
 
 	return this.find(query, options);
 }
@@ -74,7 +74,7 @@ findTasksByRoom(rid, options) {
 	findTasksByRoomAndText(rid, text, options) {
 		const query = {
 			rid,
-			taskrid: { $exists: true },
+			drid: { $exists: true },
 			...text && {
 				$text: {
 					$search: text,

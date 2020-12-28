@@ -248,7 +248,7 @@ Template.headerRoom.onCreated(function() {
 	//makhn
 	const isTask = (rid) => {
 		const room = ChatRoom.findOne({ _id: rid });
-		return !!(room && room.prid);
+		return !!(room && room.isTask);
 	};
 	//
 
@@ -258,7 +258,6 @@ Template.headerRoom.onCreated(function() {
 		this.state.set({
 			rid,
 			discussion: isDiscussion(rid),
-			task: isTask(rid),
 
 		});
 
@@ -270,6 +269,12 @@ Template.headerRoom.onCreated(function() {
 		}
 
 		//makhn
+		this.state.set({
+			rid,
+			task: isTask(rid),
+
+		});
+
 
 		if (!this.state.get('task') && isFavoritesEnabled()) {
 			const subscription = ChatSubscription.findOne({ rid }, { fields: { f: 1 } });

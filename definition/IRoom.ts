@@ -21,7 +21,8 @@ export interface IRoom extends IRocketChatRecord {
 	lm?: Date;
 	usersCount: number;
 	// "jitsiTimeout" : Date
-
+	//makhn 28
+	isTask?: string,
 	prid: string;
 	avatarETag?: string;
 	tokenpass?: {

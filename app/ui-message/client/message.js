@@ -475,10 +475,10 @@ Template.message.helpers({
 	//makhn
 	modCurrentTaskStatus() {
 		const { msg } = this;
-		if (msg.taskrid){
+		if (msg.drid){
 			// let modDiscussionStatus = Rooms.findOneById(msg.drid, { modDiscussionStatus:1, _id:0 });
 			// modTODO search only modDiscussionStatus field
-			const room = ChatRoom.findOne({_id: msg.taskrid});
+			const room = ChatRoom.findOne({_id: msg.drid});
 			return {
 				key:room.modTaskStatus, 
 				value: modTaskStatusChoices[room.modTaskStatus]

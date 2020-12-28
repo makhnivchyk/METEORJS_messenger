@@ -6,43 +6,43 @@ import { deleteRoom } from '../../../lib/server';
  * We need to propagate the writing of new message in a discussion to the linking
  * system message
  */
-callbacks.add('afterSaveMessage', function(message, { _id, prid } = {}) {
-	if (prid) {
+callbacks.add('afterSaveMessage', function(message, { _id, isTask } = {}) {
+	if (isTask) {
 		Messages.refreshTaskMetadata({ rid: _id }, message);
 	}
 	return message;
 }, callbacks.priority.LOW, 'PropagateTaskMetadata');
 
-callbacks.add('afterDeleteMessage', function(message, { _id, prid } = {}) {
-	if (prid) {
+callbacks.add('afterDeleteMessage', function(message, { _id, isTask } = {}) {
+	if (isTask) {
 		Messages.refreshTaskMetadata({ rid: _id }, message);
 	}
 	//makhn
-	if (message.taskrid) {
-		deleteRoom(message.taskrid);
+	if (message.drid) {
+		deleteRoom(message.drid);
 	}
 	return message;
 }, callbacks.priority.LOW, 'PropagateTaskMetadata');
 
 callbacks.add('afterDeleteRoom', (rid) => {
-	Rooms.find({ prid: rid }, { fields: { _id: 1 } }).forEach(({ _id }) => deleteRoom(_id));
+	Rooms.find({ isTask: rid }, { fields: { _id: 1 } }).forEach(({ _id }) => deleteRoom(_id));
 	return rid;
 }, callbacks.priority.LOW, 'DeleteTaskChain');
 
 // TODO discussions define new fields
 callbacks.add('afterRoomNameChange', (roomConfig) => {
 	const { rid, name, oldName } = roomConfig;
-	Rooms.update({ prid: rid, ...oldName && { topic: oldName } }, { $set: { topic: name } }, { multi: true });
+	Rooms.update({ isTask: rid, ...oldName && { topic: oldName } }, { $set: { topic: name } }, { multi: true });
 	return roomConfig;
 }, callbacks.priority.LOW, 'updateTopicTask');
 
-callbacks.add('afterDeleteRoom', (taskrid) => {
-	Messages.update({ taskrid }, {
+callbacks.add('afterDeleteRoom', (drid) => {
+	Messages.update({ drid }, {
 		$unset: {
 			dcount: 1,
 			dlm: 1,
-			taskrid: 1,
+			drid: 1,
 		},
 	});
-	return taskrid;
+	return drid;
 }, callbacks.priority.LOW, 'CleanTaskMessage');

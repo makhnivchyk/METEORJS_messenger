@@ -171,14 +171,28 @@ Template.channelSettings.events({
 	// }
 	
 	// #mod Handle status change status button and save status
-	"change .js-change-room-status"(e, instance) {
+	"change .js-change-room-status-discussion"(e, instance) {
 		var discussionStatus = $(e.currentTarget).val();
 		data = {
 			'newDiscussionStatus': discussionStatus,
+		
 			'room': instance.room
 		}
 		sendPostRequestToUrl('https://httpbin.org/anything', data);
 		Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', discussionStatus);
+		
+	},
+	//makhn
+	"change .js-change-room-status-task"(e, instance) {
+		var taskStatus = $(e.currentTarget).val();
+		data = {
+			'newTaskStatus': taskStatus,
+		
+			'room': instance.room
+		}
+		sendPostRequestToUrl('https://httpbin.org/anything', data);
+		Meteor.call('saveRoomSettings', instance.room._id, 'modTaskStatus', taskStatus);
+		
     }
 });
 
@@ -268,8 +282,8 @@ Template.channelSettingsInfo.helpers({
 	},
 	isActiveTaskStatus(taskStatus) {
 		return taskStatus === Template.instance().room.modTaskStatus;
-	},
+	},//change 15.12.2020 22:34
 	isTask(){
-		return Boolean(Template.instance().room && Template.instance().room.prid);
-	} 
+		return Boolean(Template.instance().room && Template.instance().room.isTask);
+	} ,
 });

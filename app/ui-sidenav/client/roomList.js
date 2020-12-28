@@ -72,7 +72,7 @@ Template.roomList.helpers({
 			//makhn
 			if (this.identifier === 'task') {
 				types = ['c', 'p', 'd'];
-				query.prid = { $exists: true };
+				query.isTask = { $exists: true };
 			}
 //
 			if (this.identifier === 'tokens') {
@@ -91,7 +91,7 @@ Template.roomList.helpers({
 			}
 			//makhn
 			if (getUserPreference(user, 'sidebarShowTask')) {
-				query.prid = { $exists: false };
+				query.isTask = { $exists: false };
 			}
 			//
 

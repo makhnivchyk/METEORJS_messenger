@@ -22,6 +22,10 @@ export class Rooms extends Base {
 		this.tryEnsureIndex({ tokenpass: 1 }, { sparse: true });
 		// discussions
 		this.tryEnsureIndex({ prid: 1 }, { sparse: true });
+		//makhn change 15.12.2020 22:35
+		//makhn 28
+		//this.tryEnsureIndex({ isTask: 1 }, { sparse: true });
+		//
 		this.tryEnsureIndex({ fname: 1 }, { sparse: true });
 		// field used for DMs only
 		this.tryEnsureIndex({ uids: 1 }, { sparse: true });
@@ -364,13 +368,13 @@ export class Rooms extends Base {
 		return this.find(query, options);
 	}
 
-	//makhn
+	//makhn change 15.12.2020 22:37
 	findByTypes(types, task = false, options = {}) {
 		const query = {
 			t: {
 				$in: types,
 			},
-			prid: { $exists: task },
+			isTask: { $exists: task },
 		};
 		return this.find(query, options);
 	}

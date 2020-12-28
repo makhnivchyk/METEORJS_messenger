@@ -205,7 +205,7 @@ export const sendNotification = async ({
 
 	//makhn
 	if (hasMentionToUser) {
-		let isTask = room && room.prid;
+		let isTask = room && room.isTask;
 		if (isTask){
 			console.log('Got message with mention in task:', notificationMessage);
 			let data = {

@@ -1065,8 +1065,8 @@ Template.room.events({
 	//
 	'click .js-navigate-to-task'(event) {
 		event.preventDefault();
-		const { msg: { taskrid } } = messageArgs(this);
-		FlowRouter.goToRoomById(taskrid);
+		const { msg: { drid } } = messageArgs(this);
+		FlowRouter.goToRoomById(drid);
 	},
 });
 

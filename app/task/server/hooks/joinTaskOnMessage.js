@@ -5,7 +5,7 @@ import { Subscriptions } from '../../../models/server';
 
 callbacks.add('beforeSaveMessage', (message, room) => {
 	// abort if room is not a discussion
-	if (!room || !room.prid) {
+	if (!room || !room.isTask) {
 		return message;
 	}
 

@@ -24,7 +24,7 @@ export const roomTypeI18nMap = {
 
 const FilterByTypeAndText = ({ setFilter, ...props }) => {
 	const [text, setText] = useState('');
-	const [types, setTypes] = useState({ d: false, c: false, p: false, l: false, discussions: false , task:false});
+	const [types, setTypes] = useState({ d: false, c: false, p: false, l: false, discussions: false , tasks:false});
 
 	const t = useTranslation();
 

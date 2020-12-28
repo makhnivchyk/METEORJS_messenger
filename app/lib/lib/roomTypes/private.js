@@ -31,10 +31,12 @@ export class PrivateRoomType extends RoomTypeConfig {
 			route: new PrivateRoomRoute(),
 		});
 	}
-
+//makhn 24/12/2020
 	getIcon(roomData) {
 		if (roomData.prid) {
 			return 'discussion';
+		}else if (roomData.isTask) {
+			return 'bell';
 		}
 		return this.icon;
 	}
@@ -50,6 +52,9 @@ export class PrivateRoomType extends RoomTypeConfig {
 
 	roomName(roomData) {
 		if (roomData.prid) {
+			return roomData.fname;
+		}
+		if (roomData.isTask) {
 			return roomData.fname;
 		}
 		if (settings.get('UI_Allow_room_names_with_special_chars')) {

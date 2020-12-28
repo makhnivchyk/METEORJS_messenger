@@ -1,6 +1,5 @@
 // Templates
 import './views/creationDialog/CreateTask';
-import './views/TaskList';
 import './views/TaskTabbar';
 
 // Other UI extensions

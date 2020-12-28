@@ -202,7 +202,7 @@ export function DiscussionList({ total = 10, discussions = [], loadMoreItems, lo
 
 	return <VerticalBar>
 		<VerticalBar.Header>
-			<VerticalBar.Icon name='discussion'/>
+			<VerticalBar.Icon name='discussions'/>
 			<Box flexShrink={1} flexGrow={1} withTruncatedText mi='x8'>{t('Discussions')}</Box>
 			<VerticalBar.Close onClick={onClose}/>
 		</VerticalBar.Header>

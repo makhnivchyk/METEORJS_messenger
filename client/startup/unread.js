@@ -22,6 +22,7 @@ const fetchSubscriptions = () => ChatSubscription.find({
 		unreadAlert: 1,
 		fname: 1,
 		prid: 1,
+		isTask:1 
 	},
 }).fetch();
 

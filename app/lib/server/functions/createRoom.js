@@ -108,6 +108,10 @@ export const createRoom = function(type, name, owner, members = [], readOnly, ex
 			extra.prid = room.prid;
 		}
 
+		if (room.isTask) {
+			extra.isTask = room.isTask;
+		}
+
 		if (username === owner.username) {
 			extra.ls = now;
 		}

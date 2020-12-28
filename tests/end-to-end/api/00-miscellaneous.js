@@ -143,6 +143,7 @@ describe('miscellaneous', function() {
 					'sidebarGroupByType',
 					'muteFocusedConversations',
 					'sidebarShowDiscussion',
+					'sidebarShowTask',
 				];
 
 				expect(res.body).to.have.property('success', true);

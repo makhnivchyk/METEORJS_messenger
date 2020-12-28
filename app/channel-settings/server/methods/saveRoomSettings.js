@@ -19,9 +19,11 @@ import { saveStreamingOptions } from '../functions/saveStreamingOptions';
 import { RoomSettingsEnum, roomTypes } from '../../../utils';
 
 import { modSaveDiscussionStatus } from '../functions/modSaveDiscussionStatus';
-import { modDiscussionStatusChoices } from '/own_modifications/statusChoices'
+import { modSaveTaskStatus } from '../functions/modSaveTaskStatus';
+import { modDiscussionStatusChoices, modTaskStatusChoices } from '/own_modifications/statusChoices';
 
-const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite', 'modDiscussionStatus'];
+
+const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite', 'modDiscussionStatus', 'modTaskStatus'];
 
 const validators = {
 	default({ userId }) {
@@ -130,6 +132,23 @@ const validators = {
 			});
 		}
 	},
+	//makhn
+	modTaskStatus({ userId, value, room, rid }){
+		if ( !(value in modTaskStatusChoices)){
+			throw new Meteor.Error('error-action-not-allowed', 'You can not choose this status', {
+				method: 'saveRoomSettings',
+				action: 'Editing_room',
+			});
+		}
+		let isTask = Boolean(room && room.isTask);
+		if (!isTask){
+			throw new Meteor.Error('error-action-not-allowed', 'You can save status only for task', {
+				method: 'saveRoomSettings',
+				action: 'Editing_room',
+			});
+		}
+	},
+	//
 };
 
 const settingSavers = {
@@ -227,6 +246,10 @@ const settingSavers = {
 	},
 	modDiscussionStatus({value, rid, user}) {
 		modSaveDiscussionStatus(rid, value, user);
+	},
+	//makhn
+	modTaskStatus({value, rid, user}) {
+		modSaveTaskStatus(rid, value, user);
 	}
 };
 

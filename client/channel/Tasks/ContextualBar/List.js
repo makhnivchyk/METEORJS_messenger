@@ -32,7 +32,7 @@ const Skeleton = React.memo(clickableItem(MessageSkeleton));
 
 const LIST_SIZE = parseInt(getConfig('taskListSize')) || 25;
 
-const filterProps = ({ msg, taskrid, u, dcount, mentions, tcount, ts, _id, dlm, attachments, name }) => ({ ..._id && { _id }, taskrid, attachments, name, mentions, msg, u, dcount, tcount, ts: new Date(ts), dlm: new Date(dlm) });
+const filterProps = ({ msg, drid, u, dcount, mentions, tcount, ts, _id, dlm, attachments, name }) => ({ ..._id && { _id }, drid, attachments, name, mentions, msg, u, dcount, tcount, ts: new Date(ts), dlm: new Date(dlm) });
 
 const subscriptionFields = { tunread: 1, tunreadUser: 1, tunreadGroup: 1 };
 const roomFields = { t: 1, name: 1 };
@@ -76,7 +76,7 @@ export function withData(WrappedComponent) {
 		}, [data, state]);
 
 		useEffect(() => {
-			const cursor = Messages.find({ rid: room._id, taskrid: { $exists: true } }).observe({
+			const cursor = Messages.find({ rid: room._id, drid: { $exists: true } }).observe({
 				added: ({ _id, ...message }) => {
 					Tasks.current.upsert({ _id }, message);
 				}, // Update message to re-render DOM
@@ -167,7 +167,7 @@ const Row = memo(function Row({
 		username={ task.u.username }
 		style={style}
 		following={task.replies && task.replies.includes(userId)}
-		data-taskrid={task.taskrid}
+		data-drid={task.drid}
 		msg={msg}
 		t={t}
 		formatDate={formatDate}
@@ -182,8 +182,8 @@ export function TaskList({ total = 10, tasks = [], loadMoreItems, loading, onClo
 	const t = useTranslation();
 
 	const onClick = useCallback((e) => {
-		const { taskrid } = e.currentTarget.dataset;
-		FlowRouter.goToRoomById(taskrid);
+		const { drid } = e.currentTarget.dataset;
+		FlowRouter.goToRoomById(drid);
 	}, []);
 
 	tasksRef.current = tasks;
@@ -202,7 +202,7 @@ export function TaskList({ total = 10, tasks = [], loadMoreItems, loading, onClo
 
 	return <VerticalBar>
 		<VerticalBar.Header>
-			<VerticalBar.Icon name='task'/>
+			<VerticalBar.Icon name='bell'/>
 			<Box flexShrink={1} flexGrow={1} withTruncatedText mi='x8'>{t('Tasks')}</Box>
 			<VerticalBar.Close onClick={onClose}/>
 		</VerticalBar.Header>

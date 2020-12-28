@@ -29,12 +29,23 @@ const roomAccessValidators: RoomAccessValidator[] = [
 		}
 		return false;
 	},
-
+//makhn 24/12/2020
 	async function(room, user): Promise<boolean> {
-		if (!room?.prid) {
+		if (!room?.prid ) {
 			return false;
 		}
 		const parentRoom = await Rooms.findOne(room.prid);
+	
+		if (!parentRoom) {
+			return false;
+		}
+		return Authorization.canAccessRoom(parentRoom, user);
+	},
+	async function(room, user): Promise<boolean> {
+		if (room?.isTask) {
+			return false;
+		}
+		const parentRoom = await Rooms.findOne(room.isTask);
 		if (!parentRoom) {
 			return false;
 		}

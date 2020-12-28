@@ -13,6 +13,7 @@ import { roomTypes } from '../../../app/utils';
 
 const getRoomAvatar = (roomId) => {
 	const room = Rooms.findOneById(roomId, { fields: { t: 1, prid: 1, name: 1, fname: 1 } });
+	const roomTask = Rooms.findOneById(roomId, { fields: { t: 1, isTask: 1, name: 1, fname: 1 } });
 	if (!room) {
 		return {};
 	}
@@ -23,7 +24,9 @@ const getRoomAvatar = (roomId) => {
 	if (room.prid && !file) {
 		return getRoomAvatar(room.prid);
 	}
-
+	if (roomTask.isTask && !file) {
+		return getRoomAvatar(roomTask.isTask);
+	}
 	return { room, file };
 };
 

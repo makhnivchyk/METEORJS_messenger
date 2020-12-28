@@ -93,6 +93,10 @@ export class AppRoomsConverter {
 			customFields: room.customFields,
 			livechatData: room.livechatData,
 			prid: typeof room.parentRoom === 'undefined' ? undefined : room.parentRoom.id,
+			//makhn 24/12/2020
+			//makhn 28
+			//isTask: typeof room.parentRoom === 'undefined' ? undefined : room.parentRoom.id,
+			
 			...room._USERNAMES && { _USERNAMES: room._USERNAMES },
 		};
 

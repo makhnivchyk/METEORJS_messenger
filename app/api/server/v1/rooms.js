@@ -288,11 +288,11 @@ API.v1.addRoute('rooms.getDiscussions', { authRequired: true }, {
 //makhn
 API.v1.addRoute('rooms.createTask', { authRequired: true }, {
 	post() {
-		const { prid, pmid, reply, t_name, users } = this.bodyParams;
-		if (!prid) {
-			return API.v1.failure('Body parameter "prid" is required.');
+		const { isTask, pmid, reply, taskt_name, users } = this.bodyParams;
+		if (!isTask) {
+			return API.v1.failure('Body parameter "isTask" is required.');
 		}
-		if (!t_name) {
+		if (!taskt_name) {
 			return API.v1.failure('Body parameter "t_name" is required.');
 		}
 		if (users && !Array.isArray(users)) {
@@ -300,9 +300,9 @@ API.v1.addRoute('rooms.createTask', { authRequired: true }, {
 		}
 
 		const task = Meteor.runAsUser(this.userId, () => Meteor.call('createTask', {
-			prid,
+			isTask,
 			pmid,
-			t_name,
+			taskt_name,
 			reply,
 			users: users || [],
 		}));
@@ -319,7 +319,7 @@ API.v1.addRoute('rooms.getTasks', { authRequired: true }, {
 		if (!Meteor.call('canAccessRoom', room._id, this.userId, {})) {
 			return API.v1.failure('not-allowed', 'Not Allowed');
 		}
-		const ourQuery = Object.assign(query, { prid: room._id });
+		const ourQuery = Object.assign(query, { isTask: 1 });
 
 		const tasks = Rooms.find(ourQuery, {
 			sort: sort || { fname: 1 },
