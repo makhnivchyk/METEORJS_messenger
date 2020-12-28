@@ -10,7 +10,9 @@ import { hasPermission, hasAllPermission } from '../../../authorization';
 import { roomTypes } from '../../../utils';
 import { ChannelSettings } from '../lib/ChannelSettings';
 import { createTemplateForComponent } from '../../../../client/reactAdapters';
-import { modDiscussionStatusChoices } from '/own_modifications/statusChoices';
+//makhn
+import { modDiscussionStatusChoices , modTaskStatusChoices} from '/own_modifications/statusChoices';
+//
 
 // #mod
 import { sendPostRequestToUrl } from '../../../../own_modifications/functions/sendPostRequestToUrl';
@@ -169,14 +171,28 @@ Template.channelSettings.events({
 	// }
 	
 	// #mod Handle status change status button and save status
-	"change .js-change-room-status"(e, instance) {
+	"change .js-change-room-status-discussion"(e, instance) {
 		var discussionStatus = $(e.currentTarget).val();
 		data = {
 			'newDiscussionStatus': discussionStatus,
+		
 			'room': instance.room
 		}
 		sendPostRequestToUrl('https://httpbin.org/anything', data);
 		Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', discussionStatus);
+		
+	},
+	//makhn
+	"change .js-change-room-status-task"(e, instance) {
+		var taskStatus = $(e.currentTarget).val();
+		data = {
+			'newTaskStatus': taskStatus,
+		
+			'room': instance.room
+		}
+		sendPostRequestToUrl('https://httpbin.org/anything', data);
+		Meteor.call('saveRoomSettings', instance.room._id, 'modTaskStatus', taskStatus);
+		
     }
 });
 
@@ -257,5 +273,17 @@ Template.channelSettingsInfo.helpers({
 	},
 	isDiscussion(){
 		return Boolean(Template.instance().room && Template.instance().room.prid);
-	} 
+	} ,
+//makhn
+	modTaskStatuses() {
+		var result = [];
+		for (var key in modTaskStatusChoices) result.push({key:key,value:modTaskStatusChoices[key]});
+		return result;
+	},
+	isActiveTaskStatus(taskStatus) {
+		return taskStatus === Template.instance().room.modTaskStatus;
+	},//change 15.12.2020 22:34
+	isTask(){
+		return Boolean(Template.instance().room && Template.instance().room.isTask);
+	} ,
 });

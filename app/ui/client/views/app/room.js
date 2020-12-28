@@ -1060,6 +1060,14 @@ Template.room.events({
 		const { msg: { drid } } = messageArgs(this);
 		FlowRouter.goToRoomById(drid);
 	},
+	//makhn
+
+	//
+	'click .js-navigate-to-task'(event) {
+		event.preventDefault();
+		const { msg: { drid } } = messageArgs(this);
+		FlowRouter.goToRoomById(drid);
+	},
 });
 
 

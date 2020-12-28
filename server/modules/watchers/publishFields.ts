@@ -14,6 +14,7 @@ export const subscriptionFields = {
 	roles: 1,
 	unread: 1,
 	prid: 1,
+	isTask: 1,
 	userMentions: 1,
 	groupMentions: 1,
 	archived: 1,
@@ -62,6 +63,7 @@ export const roomFields = {
 	lastMessage: 1,
 	retention: 1,
 	prid: 1,
+	isTask: 1,
 	avatarETag: 1,
 	usersCount: 1,
 
@@ -93,5 +95,9 @@ export const roomFields = {
 	usernames: 1,
 	uids: 1,
 
-	modDiscussionStatus: 1
+	modDiscussionStatus: 1,
+
+	//makhn
+modTaskStatus :1
+	//
 };

@@ -103,7 +103,15 @@ function ViewModeList() {
 
 function GroupingList() {
 	const isDiscussionEnabled = useSetting('Discussion_enabled');
+	//makhn
+	const isTaskEnabled = useSetting('Task_enabled');
+	//
 	const sidebarShowDiscussion = useUserPreference('sidebarShowDiscussion');
+
+	//makhn
+	const sidebarShowTask = useUserPreference('sidebarShowTask');
+	//
+
 	const sidebarGroupByType = useUserPreference('sidebarGroupByType');
 	const sidebarShowFavorites = useUserPreference('sidebarShowFavorites');
 	const sidebarShowUnread = useUserPreference('sidebarShowUnread');
@@ -112,7 +120,10 @@ function GroupingList() {
 
 	const useHandleChange = (key, value) => useCallback(() => saveUserPreferences({ [key]: value }), [key, value]);
 
-	const handleChangeShowDicussion = useHandleChange('sidebarShowDiscussion', !sidebarShowDiscussion);
+	const handleChangeShowDiscussion = useHandleChange('sidebarShowDiscussion', !sidebarShowDiscussion);
+	//makhn
+	const handleChangeShowTask = useHandleChange('sidebarShowTask', !sidebarShowTask);
+	//
 	const handleChangeGroupByType = useHandleChange('sidebarGroupByType', !sidebarGroupByType);
 	const handleChangeShoFavorite = useHandleChange('sidebarShowFavorites', !sidebarShowFavorites);
 	const handleChangeShowUnread = useHandleChange('sidebarShowUnread', !sidebarShowUnread);
@@ -125,7 +136,9 @@ function GroupingList() {
 		</Margins>
 		<ul className='rc-popover__list'>
 			<Margins block='x8'>
-				{isDiscussionEnabled && <SortListItem icon={'discussion'} text={t('Discussions')} input={<CheckBox onChange={handleChangeShowDicussion} name='sidebarShowDiscussion' checked={sidebarShowDiscussion} />} />}
+		
+				{isDiscussionEnabled && <SortListItem icon={'discussion'} text={t('Discussion')} input={<CheckBox onChange={handleChangeShowDiscussion} name='sidebarShowDiscussion' checked={sidebarShowDiscussion} />} />}
+				{isTaskEnabled && <SortListItem icon={'bell'} text={t('Task')} input={<CheckBox onChange={handleChangeShowTask} name='sidebarShowTask' checked={sidebarShowTask} />} />}
 				<SortListItem icon={'group-by-type'} text={t('Type')} input={<CheckBox onChange={handleChangeGroupByType} name='sidebarGroupByType' checked={sidebarGroupByType} />} />
 				<SortListItem icon={'star'} text={t('Favorites')} input={<CheckBox onChange={handleChangeShoFavorite} name='sidebarShowFavorites' checked={sidebarShowFavorites} />} />
 				<SortListItem icon={'eye-off'} text={t('Unread_on_top')} input={<CheckBox onChange={handleChangeShowUnread} name='sidebarShowUnread' checked={sidebarShowUnread} />} />

@@ -12,6 +12,11 @@ export const useRoomList = (): Array<ISubscription> => {
 	const sidebarGroupByType = useUserPreference('sidebarGroupByType');
 	const favoritesEnabled = useUserPreference('sidebarShowFavorites');
 	const showDiscussion = useUserPreference('sidebarShowDiscussion');
+
+	//makhn
+	const showTask = useUserPreference('sidebarShowTask');
+	//
+	
 	const sidebarShowUnread = useUserPreference('sidebarShowUnread');
 
 	const options = useQueryOptions();
@@ -28,6 +33,9 @@ export const useRoomList = (): Array<ISubscription> => {
 		const _public = new Set();
 		const direct = new Set();
 		const discussion = new Set();
+		//makhn
+		const task = new Set();
+		//
 		const conversation = new Set();
 
 		rooms.forEach((room) => {
@@ -41,7 +49,12 @@ export const useRoomList = (): Array<ISubscription> => {
 
 			if (showDiscussion && room.prid) {
 				return discussion.add(room);
+			} 
+			//makhn change 15.12.2020 23:04 24/12/2020
+			if (showTask && room.isTask) {
+				return task.add(room);
 			}
+			//
 
 			if (room.t === 'c') {
 				_public.add(room);
@@ -70,11 +83,14 @@ export const useRoomList = (): Array<ISubscription> => {
 		sidebarShowUnread && unread.size && groups.set('Unread', unread);
 		favoritesEnabled && favorite.size && groups.set('Favorites', favorite);
 		showDiscussion && discussion.size && groups.set('Discussions', discussion);
+		//makhn
+		showTask && task.size && groups.set('Tasks', task);
+		//
 		sidebarGroupByType && _private.size && groups.set('Private', _private);
 		sidebarGroupByType && _public.size && groups.set('Public', _public);
 		sidebarGroupByType && direct.size && groups.set('Direct', direct);
 		!sidebarGroupByType && groups.set('Conversations', conversation);
 		return [...groups.entries()].flatMap(([key, group]) => [key, ...group]);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [rooms, showOmnichannel, inquiries.enabled, inquiries.enabled && inquiries.queue, sidebarShowUnread, favoritesEnabled, showDiscussion, sidebarGroupByType]);
+	}, [rooms, showOmnichannel, inquiries.enabled, inquiries.enabled && inquiries.queue, sidebarShowUnread, favoritesEnabled, showDiscussion, showTask, sidebarGroupByType]);
 };

@@ -98,6 +98,7 @@ Meteor.methods({
 					featured: 1,
 					usersCount: 1,
 					prid: 1,
+					isTask: 1,
 				},
 			});
 

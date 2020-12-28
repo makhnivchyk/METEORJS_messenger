@@ -4,7 +4,7 @@ import Busboy from 'busboy';
 import { FileUpload } from '../../../file-upload';
 import { Rooms, Messages } from '../../../models';
 import { API } from '../api';
-import { findAdminRooms, findChannelAndPrivateAutocomplete, findAdminRoom } from '../lib/rooms';
+import { findAdminRooms, findAdminRoomsTask, findChannelAndPrivateAutocomplete, findAdminRoom } from '../lib/rooms';
 import { sendFile, sendViaEmail } from '../../../../server/lib/channelExport';
 import { canAccessRoom, hasPermission } from '../../../authorization/server';
 
@@ -226,7 +226,7 @@ API.v1.addRoute('rooms.leave', { authRequired: true }, {
 		const room = findRoomByIdOrName({ params: this.bodyParams });
 		Meteor.runAsUser(this.userId, () => {
 			Meteor.call('leaveRoom', room._id);
-		});
+		});discussiondiscussion
 
 		return API.v1.success();
 	},
@@ -257,6 +257,8 @@ API.v1.addRoute('rooms.createDiscussion', { authRequired: true }, {
 	},
 });
 
+
+
 API.v1.addRoute('rooms.getDiscussions', { authRequired: true }, {
 	get() {
 		const room = findRoomByIdOrName({ params: this.requestParams() });
@@ -282,6 +284,59 @@ API.v1.addRoute('rooms.getDiscussions', { authRequired: true }, {
 		});
 	},
 });
+
+//makhn
+API.v1.addRoute('rooms.createTask', { authRequired: true }, {
+	post() {
+		const { isTask, pmid, reply, taskt_name, users } = this.bodyParams;
+		if (!isTask) {
+			return API.v1.failure('Body parameter "isTask" is required.');
+		}
+		if (!taskt_name) {
+			return API.v1.failure('Body parameter "t_name" is required.');
+		}
+		if (users && !Array.isArray(users)) {
+			return API.v1.failure('Body parameter "users" must be an array.');
+		}
+
+		const task = Meteor.runAsUser(this.userId, () => Meteor.call('createTask', {
+			isTask,
+			pmid,
+			taskt_name,
+			reply,
+			users: users || [],
+		}));
+
+		return API.v1.success({ task });
+	},
+});
+
+API.v1.addRoute('rooms.getTasks', { authRequired: true }, {
+	get() {
+		const room = findRoomByIdOrName({ params: this.requestParams() });
+		const { offset, count } = this.getPaginationItems();
+		const { sort, fields, query } = this.parseJsonQuery();
+		if (!Meteor.call('canAccessRoom', room._id, this.userId, {})) {
+			return API.v1.failure('not-allowed', 'Not Allowed');
+		}
+		const ourQuery = Object.assign(query, { isTask: 1 });
+
+		const tasks = Rooms.find(ourQuery, {
+			sort: sort || { fname: 1 },
+			skip: offset,
+			limit: count,
+			fields,
+		}).fetch();
+
+		return API.v1.success({
+			tasks,
+			count: tasks.length,
+			offset,
+			total: Rooms.find(ourQuery).count(),
+		});
+	},
+});
+//
 
 API.v1.addRoute('rooms.adminRooms', { authRequired: true }, {
 	get() {

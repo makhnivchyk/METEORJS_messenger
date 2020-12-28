@@ -34,6 +34,8 @@ export class PublicRoomType extends RoomTypeConfig {
 	getIcon(roomData) {
 		if (roomData.prid) {
 			return 'discussion';
+		}else if (roomData.isTask) {
+			return 'bell';
 		}
 		return this.icon;
 	}
@@ -48,6 +50,9 @@ export class PublicRoomType extends RoomTypeConfig {
 
 	roomName(roomData) {
 		if (roomData.prid) {
+			return roomData.fname;
+		}
+		if (roomData.isTask) {
 			return roomData.fname;
 		}
 		if (settings.get('UI_Allow_room_names_with_special_chars')) {
@@ -82,8 +87,13 @@ export class PublicRoomType extends RoomTypeConfig {
 	}
 
 	canSendMessage(roomId) {
+		//24/12/2020
 		const room = ChatRoom.findOne({ _id: roomId, t: 'c' }, { fields: { prid: 1 } });
+		const roomTask = ChatRoom.findOne({ _id: roomId, t: 'c' }, { fields: { isTask: 1 } });
 		if (room.prid) {
+			return true;
+		}
+		if (room.isTask) {
 			return true;
 		}
 
@@ -140,4 +150,9 @@ export class PublicRoomType extends RoomTypeConfig {
 	getDiscussionType() {
 		return 'c';
 	}
+	//makhn
+	getTaskType() {
+		return 'c';
+	}
+	//
 }

@@ -19,11 +19,12 @@ export const roomTypeI18nMap = {
 	d: 'Direct',
 	p: 'Group',
 	discussion: 'Discussion',
+	task : 'Task',
 };
 
 const FilterByTypeAndText = ({ setFilter, ...props }) => {
 	const [text, setText] = useState('');
-	const [types, setTypes] = useState({ d: false, c: false, p: false, l: false, discussions: false });
+	const [types, setTypes] = useState({ d: false, c: false, p: false, l: false, discussions: false , tasks:false});
 
 	const t = useTranslation();
 
@@ -43,6 +44,7 @@ const FilterByTypeAndText = ({ setFilter, ...props }) => {
 	const idPrivate = useUniqueId();
 	const idOmnichannel = useUniqueId();
 	const idDiscussions = useUniqueId();
+	const idTasks = useUniqueId();
 
 	return <Box mb='x16' is='form' onSubmit={useCallback((e) => e.preventDefault(), [])} display='flex' flexDirection='column' {...props}>
 		<TextInput flexShrink={0} placeholder={t('Search_Rooms')} addon={<Icon name='magnifier' size='x20'/>} onChange={handleChange} value={text} />
@@ -69,6 +71,13 @@ const FilterByTypeAndText = ({ setFilter, ...props }) => {
 						<CheckBox checked={types.discussions} id={idDiscussions} onChange={() => handleCheckBox('discussions')}/>
 						<Field.Label htmlFor={idDiscussions}>{t('Discussions')}</Field.Label>
 					</Field.Row>
+				
+					<Field.Row>
+						<CheckBox checked={types.tasks} id={idTasks} onChange={() => handleCheckBox('tasks')}/>
+						<Field.Label htmlFor={idTasks}>{t('Tasks')}</Field.Label>
+					</Field.Row>
+
+					
 				</Margins>
 			</Box>
 		</Field>

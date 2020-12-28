@@ -48,6 +48,14 @@ export class MessagesRaw extends BaseRaw {
 		return this.find(query, options);
 	}
 
+//makhn
+findTasksByRoom(rid, options) {
+	const query = { rid, drid: { $exists: true } };
+
+	return this.find(query, options);
+}
+//
+
 	findDiscussionsByRoomAndText(rid, text, options) {
 		const query = {
 			rid,
@@ -61,6 +69,22 @@ export class MessagesRaw extends BaseRaw {
 
 		return this.find(query, options);
 	}
+
+	//makhn
+	findTasksByRoomAndText(rid, text, options) {
+		const query = {
+			rid,
+			drid: { $exists: true },
+			...text && {
+				$text: {
+					$search: text,
+				},
+			},
+		};
+
+		return this.find(query, options);
+	}
+	//
 
 	findAllNumberOfTransferredRooms({ start, end, departmentId, onlyCount = false, options = {} }) {
 		const match = {

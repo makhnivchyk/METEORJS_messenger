@@ -299,4 +299,9 @@ export class RoomTypeConfig {
 	getDiscussionType() {
 		return 'p';
 	}
+	//makhn
+	getTaskType() {
+		return 'p';
+	}
+//
 }

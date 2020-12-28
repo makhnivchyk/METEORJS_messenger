@@ -29,6 +29,8 @@ export interface ISubscription extends IRocketChatRecord {
 	tunreadUser: Array<string>;
 
 	prid?: RoomID;
+//makhn 24/12/2020
+	isTask?: RoomID;
 
 	roles?: string[];
 }
