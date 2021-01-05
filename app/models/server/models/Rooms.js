@@ -1185,7 +1185,7 @@ export class Rooms extends Base {
 			},
 			name: nameRegex,
 			archived: { $ne: true },
-			prid: {
+			isTask: {
 				$exists: false,
 			},
 		};
@@ -1212,7 +1212,7 @@ export class Rooms extends Base {
 
 	//makhn
 	countTasks() {
-		return this.find({ prid: { $exists: true } }).count();
+		return this.find({ isTask: { $exists: true } }).count();
 	}
 	//
 
