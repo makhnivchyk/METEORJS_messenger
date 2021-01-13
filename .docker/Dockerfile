@@ -30,7 +30,7 @@ USER rocketchat
 RUN cd /not_built_app/ \
     && ls \
     && meteor npm install \
-    && meteor build --directory /built_app/ 
+    && meteor build --directory /built_app/ --server localhost:3000 
     # && rm package-lock.json 
     # && sudo chown -Rh rocketchat:rocketchat .meteor/local \
     # && cp -rp /tmp/built_app/* /built_app \
