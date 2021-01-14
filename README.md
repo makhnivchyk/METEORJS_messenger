@@ -33,21 +33,12 @@ docker login
 docker build -f ./.docker/Dockerfile -t intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)* .
 ```
 2. Wait for a long time... 
-3. check 
-``sh
- sudo docker images
-```
-if repository - <none> and tag - <none> 
 
-	3.1
-		``sh
-		sudo docker tag "IMAGE ID" intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)*
-		``
-
-4. push image to dockerhub:
+3. push image to dockerhub:
 ```sh
 sudo docker push intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)*
 ```
+
 [![Rocket.Chat](https://open.rocket.chat/images/join-chat.svg)](https://open.rocket.chat/)
 [![Build Status](https://img.shields.io/travis/RocketChat/Rocket.Chat/master.svg)](https://travis-ci.org/RocketChat/Rocket.Chat)
 [![Project Dependencies](https://david-dm.org/RocketChat/Rocket.Chat.svg)](https://david-dm.org/RocketChat/Rocket.Chat)
