@@ -28,13 +28,17 @@ git pull sync master
 ```
 docker login
 ```
-1. Build image:
+2. ``meteor remove-platform ios
+meteor remove-platform android
+``
+
+3. Build image:
 ```sh
 docker build -f ./.docker/Dockerfile -t intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)* .
 ```
-2. Wait for a long time... 
+4. Wait for a long time... 
 
-3. push image to dockerhub:
+5. push image to dockerhub:
 ```sh
 sudo docker push intensiflyio/rc-servicedesk:*VERSION(3.8.0_v1)*
 ```

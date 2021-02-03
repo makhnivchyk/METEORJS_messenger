@@ -163,10 +163,15 @@ Template.headerRoom.events({
 		);
 	},
 
-	'click .js-open-parent-channel'(event, t) {
+	'click .js-open-parent-channel-discussion'(event, t) {
 		event.preventDefault();
 		const { prid } = t.currentChannel;
 		FlowRouter.goToRoomById(prid);
+	},
+	'click .js-open-parent-channel-task'(event, t) {
+		event.preventDefault();
+		const { isTask } = t.currentChannel;
+		FlowRouter.goToRoomById(isTask);
 	},
 	'click .js-toggle-encryption'(event) {
 		event.stopPropagation();
