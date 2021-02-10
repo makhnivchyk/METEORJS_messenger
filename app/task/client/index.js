@@ -11,7 +11,7 @@ import './tabBar';
 import '../lib/taskRoomType';
 
 // Style
-import './public/stylesheets/task.css';
+import './public/stylesheets/styleStatus.css';
 
 // #mod
-import '../../../own_modifications/style/task.css';
+import '../../../own_modifications/style/styleStatus.css';

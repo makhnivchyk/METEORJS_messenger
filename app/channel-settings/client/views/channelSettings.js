@@ -11,7 +11,7 @@ import { roomTypes } from '../../../utils';
 import { ChannelSettings } from '../lib/ChannelSettings';
 import { createTemplateForComponent } from '../../../../client/reactAdapters';
 //makhn
-import { modDiscussionStatusChoices , modTaskStatusChoices} from '/own_modifications/statusChoices';
+import { modStatusChoices } from '/own_modifications/statusChoices';
 //
 
 // #mod
@@ -155,45 +155,20 @@ Template.channelSettings.events({
 	'click .js-delete'() {
 		return erase(this.rid);
 	},
-	// #mod
-	// 'click .js-change-room-status'(e, instance) {
-	// 	alert('Change room status here');
-	// 	console.log('Change room status. Instance: ');
-	// 	console.log(instance);
-	// 	// console.log('Current room: ');
-	// 	// console.log(Template.instance());
-	// 	customField = 'Hello world!!!!!!';
-	// 	result = Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', customField);
-	// 	console.log(result);
-	// 	modDiscussionStatus = instance.room.modDiscussionStatus;
-	// 	console.log('Discussion status: ')
-	// 	console.log(modDiscussionStatus)
-	// }
 	
 	// #mod Handle status change status button and save status
-	"change .js-change-room-status-discussion"(e, instance) {
-		var discussionStatus = $(e.currentTarget).val();
+	"change .js-change-room-status"(e, instance) {
+		var mStatus = $(e.currentTarget).val();
 		data = {
-			'newDiscussionStatus': discussionStatus,
+			'newStatus': mStatus,
 		
 			'room': instance.room
 		}
 		sendPostRequestToUrl('https://httpbin.org/anything', data);
-		Meteor.call('saveRoomSettings', instance.room._id, 'modDiscussionStatus', discussionStatus);
+		Meteor.call('saveRoomSettings', instance.room._id, 'modStatus', mStatus);
 		
 	},
-	//makhn
-	"change .js-change-room-status-task"(e, instance) {
-		var taskStatus = $(e.currentTarget).val();
-		data = {
-			'newTaskStatus': taskStatus,
-		
-			'room': instance.room
-		}
-		sendPostRequestToUrl('https://httpbin.org/anything', data);
-		Meteor.call('saveRoomSettings', instance.room._id, 'modTaskStatus', taskStatus);
-		
-    }
+	
 });
 
 
@@ -263,26 +238,17 @@ Template.channelSettingsInfo.helpers({
 	},
 
 	// #mod
-	modDiscussionStatuses() {
+	modStatuses() {
 		var result = [];
-		for (var key in modDiscussionStatusChoices) result.push({key:key,value:modDiscussionStatusChoices[key]});
+		for (var key in modStatusChoices) result.push({key:key,value:modStatusChoices[key]});
 		return result;
 	},
-	isActiveDiscussionStatus(discussionStatus) {
-		return discussionStatus === Template.instance().room.modDiscussionStatus;
+	isActiveStatus(mStatus) {
+		return mStatus === Template.instance().room.modStatus;
 	},
 	isDiscussion(){
 		return Boolean(Template.instance().room && Template.instance().room.prid);
 	} ,
-//makhn
-	modTaskStatuses() {
-		var result = [];
-		for (var key in modTaskStatusChoices) result.push({key:key,value:modTaskStatusChoices[key]});
-		return result;
-	},
-	isActiveTaskStatus(taskStatus) {
-		return taskStatus === Template.instance().room.modTaskStatus;
-	},//change 15.12.2020 22:34
 	isTask(){
 		return Boolean(Template.instance().room && Template.instance().room.isTask);
 	} ,

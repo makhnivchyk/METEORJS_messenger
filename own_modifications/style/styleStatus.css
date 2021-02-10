@@ -1,4 +1,4 @@
-.task-status-dropdown {
+.status-dropdown {
     position: relative;
     border: solid;
     background-color: transparent;
@@ -29,11 +29,11 @@
 	justify-content: center;
 }
 
-.task-status-dropdown select {
+.status-dropdown select {
     display: none; 
 }
 
-.task-status span {
+.status span {
     padding-left:10px;
     padding-right:10px;
     padding-top: 2px;
@@ -41,22 +41,22 @@
 }
 
 
-.task-status .new {
+.status .new {
     background-color: rgb(245, 228, 197);
 }
-.task-status .in_progress {
+.status .in_progress {
     background-color: rgb(255, 255, 112);
 }
-.task-status .done {
+.status .done {
     background-color: rgb(154, 255, 154);
 }
-.task-status .on_hold {
+.status .on_hold {
     background-color: rgba(144, 144, 255, 0.979);
     
 }
-.task-status .cancelled {
+.status .cancelled {
     background-color: rgb(255, 194, 81);
 }
-.task-status .spam {
+.status .spam {
     background-color: rgb(255, 72, 72);
 }

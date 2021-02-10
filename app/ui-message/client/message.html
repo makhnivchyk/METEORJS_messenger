@@ -122,24 +122,24 @@
 			{{/each}}
 
 			{{#if $eq msg.t "discussion-created"}}
-				<div class="message-discussion">
+				<div class="message">
 					{{#if $gt msg.dcount 0}}
-						<button class="js-navigate-to-discussion rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
+						<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
 							<!-- {{> icon icon="discussion"}} -->
 							<span>{{{_ 'message_counter' counter=i18nDiscussionCounter count=msg.dcount }}}</span>
 						</button>
 					{{else}}
-						<button class="js-navigate-to-discussion rc-button rc-button--primary rc-button--small no-replies" data-rid={{roomId}}>
+						<button class="js-navigate-to rc-button rc-button--primary rc-button--small no-replies" data-rid={{roomId}}>
 							{{_ "No_messages_yet" }}
 						</button>
 					{{/if}}
-					<span class="discussion-reply-lm">{{ formatDateAndTime msg.dlm }}</span>
+					<span class="reply-lm">{{ formatDateAndTime msg.dlm }}</span>
 					{{# if unread }}
 						<div title="{{_ 'Unread' }}" class="message-unread"></div>
 					{{/if}}
-					<div class="discussion-status">
-						<span class="{{ modCurrentDiscussionStatus.key }}">
-							{{ modCurrentDiscussionStatus.value }} 
+					<div class="status">
+						<span class="{{ modCurrentStatus.key }}">
+							{{ modCurrentStatus.value }} 
 						</span>
 					</div>
 				</div>
@@ -147,24 +147,24 @@
 
 
 			{{#if $eq msg.t "task-created"}}
-				<div class="message-task">
+				<div class="message">
 					{{#if $gt msg.dcount 0}}
-						<button class="js-navigate-to-task rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
+						<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
 							<!-- {{> icon icon="discussion"}} -->
 							<span>{{{_ 'message_counter' counter=i18nTaskCounter count=msg.dcount }}}</span>
 						</button>
 					{{else}}
-						<button class="js-navigate-to-task rc-button rc-button--primary rc-button--small no-replies" data-rid={{roomId}}>
+						<button class="js-navigate-to rc-button rc-button--primary rc-button--small no-replies" data-rid={{roomId}}>
 							{{_ "No_messages_yet" }}
 						</button>
 					{{/if}}
-					<span class="task-reply-lm">{{ formatDateAndTime msg.dlm }}</span>
+					<span class="reply-lm">{{ formatDateAndTime msg.dlm }}</span>
 					{{# if unread }}
 						<div title="{{_ 'Unread' }}" class="message-unread"></div>
 					{{/if}}
-					<div class="task-status">
-						<span class="{{ modCurrentTaskStatus.key }}">
-							{{ modCurrentTaskStatus.value }} 
+					<div class="status">
+						<span class="{{ modCurrentStatus.key }}">
+							{{ modCurrentStatus.value }} 
 						</span>
 					</div>
 				</div>
@@ -177,7 +177,7 @@
 						{{_ 'Reply'}}
 					</button>
 					<span class='reply-counter'>{{_ i18nReplyCounter counter=msg.tcount }}</span>
-					<span class="discussion-reply-lm">{{ formatDateAndTime msg.tlm}}</span>
+					<span class="reply-lm">{{ formatDateAndTime msg.tlm}}</span>
 					{{# if unread }}
 						<div title="{{_ 'Unread' }}" class="message-unread {{class}}"></div>
 					{{/if}}

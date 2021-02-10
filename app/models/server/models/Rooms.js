@@ -1217,28 +1217,17 @@ export class Rooms extends Base {
 	//
 
 	// #mod
-	modSetDiscussionStatusById(_id, modDiscussionStatus){
+	modSetStatusById(_id, modStatus){
 		const query = { _id };
 
 		const update = {
 			$set: {
-				'modDiscussionStatus': modDiscussionStatus
+				'modStatus': modStatus
 			},
 		};
 		return this.update(query, update);
 	}
-	//makhn
-	modSetTaskStatusById(_id, modTaskStatus){
-		const query = { _id };
 
-		const update = {
-			$set: {
-				'modTaskStatus': modTaskStatus
-			},
-		};
-		return this.update(query, update);
-	}
-	//
 }
 
 export default new Rooms('room', true);

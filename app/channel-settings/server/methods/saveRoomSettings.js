@@ -18,12 +18,11 @@ import { saveRoomTokenpass } from '../functions/saveRoomTokens';
 import { saveStreamingOptions } from '../functions/saveStreamingOptions';
 import { RoomSettingsEnum, roomTypes } from '../../../utils';
 
-import { modSaveDiscussionStatus } from '../functions/modSaveDiscussionStatus';
-import { modSaveTaskStatus } from '../functions/modSaveTaskStatus';
-import { modDiscussionStatusChoices, modTaskStatusChoices } from '/own_modifications/statusChoices';
+import { modSaveStatus } from '../functions/modSaveStatus';
+import { modStatusChoices} from '/own_modifications/statusChoices';
 
 
-const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite', 'modDiscussionStatus', 'modTaskStatus'];
+const fields = ['roomAvatar', 'featured', 'roomName', 'roomTopic', 'roomAnnouncement', 'roomCustomFields', 'roomDescription', 'roomType', 'readOnly', 'reactWhenReadOnly', 'systemMessages', 'default', 'joinCode', 'tokenpass', 'streamingOptions', 'retentionEnabled', 'retentionMaxAge', 'retentionExcludePinned', 'retentionFilesOnly', 'retentionIgnoreThreads', 'retentionOverrideGlobal', 'encrypted', 'favorite', 'modStatus'];
 
 const validators = {
 	default({ userId }) {
@@ -117,38 +116,27 @@ const validators = {
 			});
 		}
 	},
-	modDiscussionStatus({ userId, value, room, rid }){
-		if ( !(value in modDiscussionStatusChoices)){
+	modStatus({ userId, value, room, rid }){
+		if ( !(value in modStatusChoices)){
 			throw new Meteor.Error('error-action-not-allowed', 'You can not choose this status', {
 				method: 'saveRoomSettings',
 				action: 'Editing_room',
 			});
 		}
 		let isDiscussion = Boolean(room && room.prid);
-		if (!isDiscussion){
-			throw new Meteor.Error('error-action-not-allowed', 'You can save status only for discussion', {
-				method: 'saveRoomSettings',
-				action: 'Editing_room',
-			});
-		}
-	},
-	//makhn
-	modTaskStatus({ userId, value, room, rid }){
-		if ( !(value in modTaskStatusChoices)){
-			throw new Meteor.Error('error-action-not-allowed', 'You can not choose this status', {
-				method: 'saveRoomSettings',
-				action: 'Editing_room',
-			});
-		}
 		let isTask = Boolean(room && room.isTask);
-		if (!isTask){
-			throw new Meteor.Error('error-action-not-allowed', 'You can save status only for task', {
+
+		if (!isDiscussion && !isTask ){
+			throw new Meteor.Error('error-action-not-allowed', 'You can`t save status', {
 				method: 'saveRoomSettings',
 				action: 'Editing_room',
 			});
 		}
+	
+
 	},
-	//
+
+	
 };
 
 const settingSavers = {
@@ -244,13 +232,11 @@ const settingSavers = {
 	roomAvatar({ value, rid, user }) {
 		setRoomAvatar(rid, value, user);
 	},
-	modDiscussionStatus({value, rid, user}) {
-		modSaveDiscussionStatus(rid, value, user);
+	modStatus({value, rid, user}) {
+		modSaveStatus(rid, value, user);
 	},
 	//makhn
-	modTaskStatus({value, rid, user}) {
-		modSaveTaskStatus(rid, value, user);
-	}
+
 };
 
 Meteor.methods({

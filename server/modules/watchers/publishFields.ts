@@ -95,9 +95,5 @@ export const roomFields = {
 	usernames: 1,
 	uids: 1,
 
-	modDiscussionStatus: 1,
-
-	//makhn
-modTaskStatus :1
-	//
+	modStatus: 1,
 };

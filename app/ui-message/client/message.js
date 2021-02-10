@@ -19,12 +19,8 @@ import { AutoTranslate } from '../../autotranslate/client';
 
 // mod
 import { ChatRoom } from '../../models';
-import { modDiscussionStatusChoices } from '/own_modifications/statusChoices';
+import { modStatusChoices } from '/own_modifications/statusChoices';
 
-//makhn
-import { modTaskStatusChoices } from '/own_modifications/statusChoices';
-//
-//
 
 const renderBody = (msg, settings) => {
 	const searchedText = msg.searchedText ? msg.searchedText : '';
@@ -458,36 +454,21 @@ Template.message.helpers({
 		const { msg } = this;
 		return msg.starred && !(msg.actionContext === 'starred' || this.context === 'starred');
 	},
-	modCurrentDiscussionStatus() {
+	modCurrentStatus() {
 		const { msg } = this;
 		if (msg.drid){
 			// let modDiscussionStatus = Rooms.findOneById(msg.drid, { modDiscussionStatus:1, _id:0 });
 			// modTODO search only modDiscussionStatus field
 			const room = ChatRoom.findOne({_id: msg.drid});
 			return {
-				key:room.modDiscussionStatus, 
-				value: modDiscussionStatusChoices[room.modDiscussionStatus]
+				key:room.modStatus, 
+				value: modStatusChoices[room.modStatus]
 			};
 		}
 		// return room.modDiscussionStatus;
 		// # TOOD: add Rooms.find() for id of message.rid or smth like that.
 	},
-	//makhn
-	modCurrentTaskStatus() {
-		const { msg } = this;
-		if (msg.drid){
-			// let modDiscussionStatus = Rooms.findOneById(msg.drid, { modDiscussionStatus:1, _id:0 });
-			// modTODO search only modDiscussionStatus field
-			const room = ChatRoom.findOne({_id: msg.drid});
-			return {
-				key:room.modTaskStatus, 
-				value: modTaskStatusChoices[room.modTaskStatus]
-			};
-		}
-		// return room.modDiscussionStatus;
-		// # TOOD: add Rooms.find() for id of message.rid or smth like that.
-	}
-	//
+
 });
 
 const hasTempClass = (node) => node.classList.contains('temp');

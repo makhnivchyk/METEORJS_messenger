@@ -1,5 +1,5 @@
 .message-thread,
-.message-task {
+.message {
 	display: flex;
 
 	padding: 0.5rem 0;
@@ -14,7 +14,7 @@
 	}
 }
 
-.task-reply-lm,
+.reply-lm,
 .reply-counter {
 	color: var(--color-white);
 
@@ -30,13 +30,13 @@
 	margin-inline-start: 8px;
 }
 
-.task-reply-lm {
+.reply-lm {
 	padding: 4px 8px;
 
 	color: var(--color-gray);
 }
 
-.task-list .load-more {
+.list .load-more {
 	text-align: center;
 	text-transform: lowercase;
 

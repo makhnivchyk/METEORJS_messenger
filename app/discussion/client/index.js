@@ -11,7 +11,7 @@ import './tabBar';
 import '../lib/discussionRoomType';
 
 // Style
-import './public/stylesheets/discussion.css';
+import './public/stylesheets/styleStatus.css';
 
 // #mod
-import '/own_modifications/style/discussion.css';
+import '/own_modifications/style/styleStatus.css';

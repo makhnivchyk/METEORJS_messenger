@@ -1,5 +1,5 @@
  export const modDefaultStatusKey = 'new';
-export const modDiscussionStatusChoices = {
+export const modStatusChoices = {
     new: 'New',
     in_progress: 'In progres',
     done :'Done',
@@ -7,14 +7,4 @@ export const modDiscussionStatusChoices = {
     cancelled: 'Cancelled',
     spam: 'Spam'
 };
-//makhn
-export const modTaskStatusChoices = {
-    new: 'New',
-    in_progress: 'In progres',
-    done :'Done',
-    on_hold: 'On hold',
-    cancelled: 'Cancelled',
-    spam: 'Spam'
-};
-//
 

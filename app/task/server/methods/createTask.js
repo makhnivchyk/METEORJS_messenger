@@ -9,7 +9,7 @@ import { roomTypes } from '../../../utils/server';
 import { callbacks } from '../../../callbacks/server';
 
 // import { modSaveDiscussionStatus } from '../../../channel-settings/server/functions';
-import { modSaveTaskStatus } from '../../../channel-settings/server/functions/modSaveTaskStatus';
+import { modSaveStatus } from '../../../channel-settings/server/functions/modSaveStatus';
 import { modDefaultStatusKey } from '/own_modifications/statusChoices';
 
 const getParentRoom = (rid) => {
@@ -119,7 +119,7 @@ const create = ({ isTask,pmid, taskt_name, reply, users, user }) => {
 	}
 
 	// #mod
-	modSaveTaskStatus(task._id, modDefaultStatusKey);
+	modSaveStatus(task._id, modDefaultStatusKey);
 	//
 
 	return task;
