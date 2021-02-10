@@ -122,32 +122,38 @@
 			{{/each}}
 
 			{{#if $eq msg.t "discussion-created"}}
+			<div class="message">
+				<div class="status">
+					<span class="{{ modCurrentStatus.key }}">
+						{{ modCurrentStatus.value }} 
+					</span>
+				</div>
+				{{#if $gt msg.dcount 0}}
+					<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
+						<!-- {{> icon icon="discussion"}} -->
+						<span>{{{_ 'message_counter' counter=i18nDiscussionCounter count=msg.dcount }}}</span>
+					</button>
+				{{else}}
+					<button class="js-navigate-to rc-button rc-button--primary rc-button--small no-replies" data-rid={{roomId}}>
+						{{_ "No_messages_yet" }}
+					</button>
+				{{/if}}
+				<span class="reply-lm">{{ formatDateAndTime msg.dlm }}</span>
+				{{# if unread }}
+					<div title="{{_ 'Unread' }}" class="message-unread"></div>
+				{{/if}}
+				
+			</div>
+		{{/if}}
+
+
+			{{#if $eq msg.t "task-created"}}
 				<div class="message">
-					{{#if $gt msg.dcount 0}}
-						<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
-							<!-- {{> icon icon="discussion"}} -->
-							<span>{{{_ 'message_counter' counter=i18nDiscussionCounter count=msg.dcount }}}</span>
-						</button>
-					{{else}}
-						<button class="js-navigate-to rc-button rc-button--primary rc-button--small no-replies" data-rid={{roomId}}>
-							{{_ "No_messages_yet" }}
-						</button>
-					{{/if}}
-					<span class="reply-lm">{{ formatDateAndTime msg.dlm }}</span>
-					{{# if unread }}
-						<div title="{{_ 'Unread' }}" class="message-unread"></div>
-					{{/if}}
 					<div class="status">
 						<span class="{{ modCurrentStatus.key }}">
 							{{ modCurrentStatus.value }} 
 						</span>
 					</div>
-				</div>
-			{{/if}}
-
-
-			{{#if $eq msg.t "task-created"}}
-				<div class="message">
 					{{#if $gt msg.dcount 0}}
 						<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
 							<!-- {{> icon icon="discussion"}} -->
@@ -162,11 +168,7 @@
 					{{# if unread }}
 						<div title="{{_ 'Unread' }}" class="message-unread"></div>
 					{{/if}}
-					<div class="status">
-						<span class="{{ modCurrentStatus.key }}">
-							{{ modCurrentStatus.value }} 
-						</span>
-					</div>
+					
 				</div>
 			{{/if}}
 

@@ -84,7 +84,8 @@
 
 
 	{{#if isDiscussion}}
-		<select class="status-dropdown js-change-room-status">
+	<form class="js-change-room-status">
+		<select name="st" class="status-dropdown">
 			{{#each modStatuses }}
 				{{#if isActiveStatus key}}
 					<option value="{{key}}" selected style="display: block !important;">{{value}}</option>
@@ -93,11 +94,14 @@
 				{{/if}}
 			{{/each}}
 		</select>
+		<input type="submit" class="status-dropdown-save" value="Save"/>
+</form>
 	{{/if}}
 
 	<!--makhn-->
 	{{#if isTask}}
-	<select class="status-dropdown js-change-room-status">
+	<form class="js-change-room-status">
+	<select name="st" class="status-dropdown">
 		{{#each modStatuses }}
 			{{#if isActiveStatus key}}
 				<option value="{{key}}" selected style="display: block !important;">{{value}}</option>
@@ -106,6 +110,11 @@
 			{{/if}}
 		{{/each}}
 	</select>
+	<input type="submit" class="status-dropdown-save" value="Save"/>
+</form>
+	
+
+	
 {{/if}}
 	<!---->
 	<div class="rc-user-info__flex rc-user-info__row rc-user-info__room">
