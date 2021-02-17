@@ -13,6 +13,7 @@ import { AutoComplete } from '../../../../meteor-autocomplete/client';
 
 import './CreateTask.html';
 
+
 Template.CreateTask.helpers({
 	onSelectUser() {
 		return Template.instance().onSelectUser;
@@ -128,6 +129,7 @@ Template.CreateTask.onRendered(function() {
 const suggestName = (msg = '') => msg.substr(0, 140);
 
 Template.CreateTask.onCreated(function() {
+
 	const { rid, message: msg } = this.data;
 
 	const parentRoom = rid && ChatSubscription.findOne({ rid });
