@@ -39,6 +39,20 @@
 			{{/if}}
 			<div class="message-body-wrapper">
 				<div class="title border-component-color color-info-font-color">
+					{{#if $eq msg.t "discussion-created"}}
+					<div class="status" style="color: black;">
+						<span class="{{ modCurrentStatus.key }}">
+							{{ modCurrentStatus.value }} 
+						</span>
+					</div>
+					{{/if}}
+					{{#if $eq msg.t "task-created"}}
+					<div class="status" style="color: black;">
+						<span class="{{ modCurrentStatus.key }}">
+							{{ modCurrentStatus.value }} 
+						</span>
+					</div>
+					{{/if}}
 					<button type="button" class="user user-card-message color-primary-font-color" data-username="{{msg.u.username}}" tabindex="1">
 						{{getName}}{{#if showUsername}} <span class="message-alias border-component-color color-info-font-color">@{{msg.u.username}}</span>{{/if}}
 					</button>
@@ -123,11 +137,6 @@
 
 			{{#if $eq msg.t "discussion-created"}}
 			<div class="message">
-				<div class="status">
-					<span class="{{ modCurrentStatus.key }}">
-						{{ modCurrentStatus.value }} 
-					</span>
-				</div>
 				{{#if $gt msg.dcount 0}}
 					<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
 						<!-- {{> icon icon="discussion"}} -->
@@ -149,11 +158,6 @@
 
 			{{#if $eq msg.t "task-created"}}
 				<div class="message">
-					<div class="status">
-						<span class="{{ modCurrentStatus.key }}">
-							{{ modCurrentStatus.value }} 
-						</span>
-					</div>
 					{{#if $gt msg.dcount 0}}
 						<button class="js-navigate-to rc-button rc-button--primary rc-button--small" data-rid={{roomId}}>
 							<!-- {{> icon icon="discussion"}} -->
