@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Blaze } from 'meteor/blaze';
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
 import toastr from 'toastr';
-
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { roomTypes } from '../../../../utils/client';
 import { callbacks } from '../../../../callbacks/client';
 import { ChatRoom, ChatSubscription } from '../../../../models/client';
@@ -15,6 +15,22 @@ import './CreateTask.html';
 
 
 Template.CreateTask.helpers({
+	delivery() {
+		if(Template.instance().state.get() == 'delivery'){
+			return 1;
+		}
+	},
+	production() {
+		if(Template.instance().state.get() == 'production'){
+			return 1;
+		}
+	},
+	costs() {
+		if(Template.instance().state.get() == 'costs'){
+			return 1;
+		}
+	},
+
 	onSelectUser() {
 		return Template.instance().onSelectUser;
 	},
@@ -95,6 +111,10 @@ Template.CreateTask.events({
 		const { value } = e.target;
 		t.reply.set(value);
 	},
+	'change #select_task_type'(e, t){
+		var tp = $(e.currentTarget).val();
+		t.state.set (tp);
+	},
 	async 'submit #create-task, click .js-save-task'(event, instance) {
 		event.preventDefault();
 		const parentChannel = instance.parentChannel.get();
@@ -129,6 +149,7 @@ Template.CreateTask.onRendered(function() {
 const suggestName = (msg = '') => msg.substr(0, 140);
 
 Template.CreateTask.onCreated(function() {
+	this.state = new ReactiveVar(false);
 
 	const { rid, message: msg } = this.data;
 
@@ -152,6 +173,7 @@ Template.CreateTask.onCreated(function() {
 	this.selectParent = new ReactiveVar(room && room.rid);
 
 	this.reply = new ReactiveVar('');
+
 
 
 	this.selectedRoom = new ReactiveVar(room ? [room] : []);
@@ -279,6 +301,7 @@ Template.SearchCreateTask.onCreated(function() {
 	this.selected = new ReactiveVar([]);
 	this.onClickTag = this.data.onClickTag;
 	this.deleteLastItem = this.data.deleteLastItem;
+	
 
 	const { collection, endpoint, field, sort, onSelect, selector = (match) => ({ term: match }) } = this.data;
 	this.ac = new AutoComplete(

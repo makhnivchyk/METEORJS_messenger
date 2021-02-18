@@ -37,20 +37,29 @@
 							<label class="rc-input__label">
 								<div class="rc-input__title">{{_ "Task_type"}}</div>
 								<div class="rc-input__wrapper">
-									<select class="rc-input__element select_task_type" name="select_task_type" id="select_task_type">
-										<option name="simple_task" id="simple_task" selected value="{{_ 'Simple_task'}}">{{_ 'Simple_task'}}</option>
-										<option name="for_delivery" id="for_delivery" value="{{_ 'For_delivery'}}">{{_ 'For_delivery'}}</option>
-										<option name="for_production" id="for_production" value="{{_ 'For_production'}}">{{_ 'For_production'}}</option>
-										<option name="material_costs" id="meterial_costs" value="{{_ 'Material_costs_in_the_task'}}">{{_ 'Material_costs_in_the_task'}}</option>
+									<select class="rc-input__element select_task_type" name="selecttype" id="select_task_type">
+										<option name="simple_task" id="simple_task" selected value="simple">{{_ 'Simple_task'}}</option>
+										<option name="for_delivery" id="for_delivery" value="delivery">{{_'For_delivery'}}</option>
+										<option name="for_production" id="for_production" value="production">{{_ 'For_production'}}</option>
+										<option name="material_costs" id="meterial_costs" value="costs">{{_ 'Material_costs_in_the_task'}}</option>
 									</select>
-						
+									<!-- {{_ 'For_production'}} -->
 								</div>
 							</label>
 						</div>
 
-						<!-- {{#if }}
+						{{#if delivery }}
 						  {{>For_delivery}}
-						{{/if}} -->
+						{{/if}}
+
+						{{#if production }}
+						  {{>For_production}}
+						{{/if}}
+
+						{{#if costs }}
+						  {{>Material_costs_in_the_task}}
+						{{/if}}
+						
 					</div>
 				<div class="create-channel__inputs">
 					<div class="rc-input">
@@ -124,6 +133,7 @@
 		<div class="rc-input__description">{{ description }}</div>
 	</div>
 </template>
+
 
 
 <template name="For_delivery">
