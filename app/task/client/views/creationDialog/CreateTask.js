@@ -20,16 +20,16 @@ Template.CreateTask.helpers({
 			return 1;
 		}
 	},
-	production() {
-		if(Template.instance().state.get() == 'production'){
-			return 1;
-		}
-	},
-	costs() {
-		if(Template.instance().state.get() == 'costs'){
-			return 1;
-		}
-	},
+	// production() {
+	// 	if(Template.instance().state.get() == 'production'){
+	// 		return 1;
+	// 	}
+	// },
+	// costs() {
+	// 	if(Template.instance().state.get() == 'costs'){
+	// 		return 1;
+		// }
+	// },
 
 	onSelectUser() {
 		return Template.instance().onSelectUser;
