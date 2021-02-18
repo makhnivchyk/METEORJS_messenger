@@ -38,7 +38,7 @@ const RoomMenu = React.memo(({ rid, unread, threadUnread, alert, roomOpen, type,
 	const unreadMessages = useMethod('unreadMessages');
 	const toggleFavorite = useMethod('toggleFavorite');
 	const leaveRoom = useMethod('leaveRoom');
-	const setStatus = useMethod('setStatus');
+	
 
 	const isUnread = alert || unread || threadUnread;
 
@@ -101,27 +101,7 @@ const RoomMenu = React.memo(({ rid, unread, threadUnread, alert, roomOpen, type,
 	});
 
 
-	const handleStatus = useMutableCallback(async () => {
-		const status = async () => {
-			try {
-				await setStatus(rid);
-			} catch (error) {
-				dispatchToastMessage({ type: 'error', message: error });
-			}
-			closeModal();
-		};
 
-		const warnText = roomTypes.getConfig(type).getUiText(UiTextContext.HIDE_WARNING);
-
-		setModal(<WarningModal
-			text={t(warnText, name)}
-			confirmText={t('Yes_status_it')}
-			close={closeModal}
-			cancel={closeModal}
-			cancelText={t('Cancel')}
-			confirm={hide}
-		/>);
-	});
 
 	const handleToggleRead = useMutableCallback(async () => {
 		try {
@@ -166,11 +146,8 @@ const RoomMenu = React.memo(({ rid, unread, threadUnread, alert, roomOpen, type,
 			label: { label: t('Leave_room'), icon: 'sign-out' },
 			action: handleLeave,
 		} },
-		setStatus: {
-			label: { label: t('Status'), icon: 'eye-off' },
-			action: handleStatus,
-		},
-	}), [t, handleHide, isUnread, handleToggleRead, canFavorite, isFavorite, handleToggleFavorite, canLeave, handleLeave, handleStatus]);
+	
+	}), [t, handleHide, isUnread, handleToggleRead, canFavorite, isFavorite, handleToggleFavorite, canLeave, handleLeave]);
 
 
 	return <Menu
