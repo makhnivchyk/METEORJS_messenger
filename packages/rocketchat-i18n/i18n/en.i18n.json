@@ -4052,5 +4052,8 @@
   "Simple_task":"Simple task",
   "For_delivery":"For delivery",
   "For_production":"For production",
-  "Material_costs_in_the_task":"Material costs in the task"
+  "Material_costs_in_the_task":"Material costs in the task",
+  "Delivery_from" : "From",
+  "Delivery_to" : "To",
+  "Deadline" : "Deadline"
 }

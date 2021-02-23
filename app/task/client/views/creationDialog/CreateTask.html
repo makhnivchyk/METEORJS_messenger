@@ -47,9 +47,7 @@
 							</label>
 						</div>
 
-						{{#if delivery }}
-						  {{>For_delivery}}
-						{{/if}}
+					
 
 						<!-- {{#if production }}
 						  {{>For_production}}
@@ -73,6 +71,25 @@
 							</div>
 						</label>
 					</div>
+
+
+					{{#if delivery }}
+					{{>For_delivery}}
+				  {{/if}}
+
+				  <div class="rc-input">
+					<label class="rc-input__label">
+						<div class="rc-input__title">{{_ "Deadline"}}</div>
+						<div class="rc-input__wrapper">
+							<div class="rc-input__icon">
+								{{> icon block="rc-input__icon-svg" icon="clock"}}
+							</div>
+							<input type="datetime-local" id="deadline" class="rc-input__element" name="deadline" />
+						</div>
+					</label>
+				</div>
+
+
 					{{> SearchCreateTask
 						onClickTag=onClickTagUser
 						deleteLastItem=deleteLastItemUser
@@ -136,7 +153,27 @@
 
 
 <template name="For_delivery">
-	Доставка
+	<div class="rc-input">
+		<label class="rc-input__label">
+			<div class="rc-input__title">{{_ "Delivery_from"}}</div>
+			<div class="rc-input__wrapper">
+				<div class="rc-input__icon">
+					{{> icon block="rc-input__icon-svg" icon="arrow-down"}}
+				</div>
+				<input type="text" id="from" class="rc-input__element" placeholder="{{_ 'Delivery_from'}}" name="from" />
+			</div>
+		</label>
+		<label class="rc-input__label">
+			<div class="rc-input__title">{{_ "Delivery_to"}}</div>
+			<div class="rc-input__wrapper">
+				<div class="rc-input__icon">
+					{{> icon block="rc-input__icon-svg" icon="flag"}}
+				</div>
+				<input type="text" id="to" class="rc-input__element" placeholder="{{_ 'Delivery_to'}}" name="to" />
+			</div>
+		</label>
+		
+	</div>
 </template>
 
 <template name="For_production">

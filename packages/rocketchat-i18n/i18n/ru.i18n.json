@@ -3567,5 +3567,8 @@
   "Simple_task":"Простое задание",
   "For_delivery":"Для доставки",
   "For_production":"Для производства",
-  "Material_costs_in_the_task":"Материальные затраты в задаче"
+  "Material_costs_in_the_task":"Материальные затраты в задаче",
+  "Delivery_from" : "Место отправки",
+  "Delivery_to" : "Место доставки",
+  "Deadline" : "Дедлайн"
 }
