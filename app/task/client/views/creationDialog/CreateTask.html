@@ -84,7 +84,7 @@
 							<div class="rc-input__icon">
 								{{> icon block="rc-input__icon-svg" icon="clock"}}
 							</div>
-							<input type="datetime-local" id="deadline" class="rc-input__element" name="deadline" />
+							<input type="datetime-local" id="deadline" class="rc-input__element" name="deadline" value="{{dead}}"/>
 						</div>
 					</label>
 				</div>
@@ -160,7 +160,7 @@
 				<div class="rc-input__icon">
 					{{> icon block="rc-input__icon-svg" icon="arrow-down"}}
 				</div>
-				<input type="text" id="from" class="rc-input__element" placeholder="{{_ 'Delivery_from'}}" name="from" />
+				<input type="text" id="from" class="rc-input__element" placeholder="{{_ 'Delivery_from'}}" name="from" value="{{delFrom}}" />
 			</div>
 		</label>
 		<label class="rc-input__label">
@@ -169,7 +169,7 @@
 				<div class="rc-input__icon">
 					{{> icon block="rc-input__icon-svg" icon="flag"}}
 				</div>
-				<input type="text" id="to" class="rc-input__element" placeholder="{{_ 'Delivery_to'}}" name="to" />
+				<input type="text" id="to" class="rc-input__element" placeholder="{{_ 'Delivery_to'}}" name="to" value="{{delTo}}"/>
 			</div>
 		</label>
 		

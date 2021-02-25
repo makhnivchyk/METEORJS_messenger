@@ -133,6 +133,7 @@ Template.channelSettings.helpers({
 Template.channelSettings.onCreated(function() {
 	this.room = ChatRoom.findOne(this.data && this.data.rid);
 	this.editing = new ReactiveVar(false);
+
 });
 
 Template.channelSettings.events({
@@ -207,6 +208,19 @@ Template.channelSettingsInfo.helpers({
 	description() {
 		return Template.instance().room.description;
 	},
+	//makhn
+	deadline() {
+		const { room } = Template.instance();
+		this.room = ChatRoom.findOne(this.data && this.data.deadl);
+		return this.room = ChatRoom.findOne(this.data && this.data.deadl);;
+	},
+	delivery_from() {
+		return Template.instance().room.delivery_from;
+	},
+	delivery_to() {
+		return Template.instance().room.delivery_to;
+	},
+	//makhn
 	broadcast() {
 		return Template.instance().room.broadcast;
 	},
