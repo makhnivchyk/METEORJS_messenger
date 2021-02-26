@@ -1,5 +1,4 @@
 <template name="CreateTask">
-
 	<section class="create-channel">
 		<div class="create-channel__wrapper">
 			<p class="create-channel__description">{{_ "Task_description"}}</p>
@@ -32,7 +31,33 @@
 						</label>
 					</div>
 				{{/unless}}
+					<div class="create-channel__inputs">
+						
+						<div class="rc-input">
+							<label class="rc-input__label">
+								<div class="rc-input__title">{{_ "Task_type"}}</div>
+								<div class="rc-input__wrapper">
+									<select class="rc-input__element select_task_type" name="selecttype" id="select_task_type">
+										<option name="simple_task" id="simple_task" selected value="simple">{{_ 'Simple_task'}}</option>
+										<option name="for_delivery" id="for_delivery" value="delivery">{{_'For_delivery'}}</option>
+										<!-- <option name="for_production" id="for_production" value="production">{{_ 'For_production'}}</option>
+										<option name="material_costs" id="meterial_costs" value="costs">{{_ 'Material_costs_in_the_task'}}</option> -->
+									</select>
+								</div>
+							</label>
+						</div>
 
+					
+
+						<!-- {{#if production }}
+						  {{>For_production}}
+						{{/if}}
+
+						{{#if costs }}
+						  {{>Material_costs_in_the_task}}
+						{{/if}} -->
+						<!--  -->
+					</div>
 				<div class="create-channel__inputs">
 					<div class="rc-input">
 						<label class="rc-input__label">
@@ -46,6 +71,25 @@
 							</div>
 						</label>
 					</div>
+
+
+					{{#if delivery }}
+					{{>For_delivery}}
+				  {{/if}}
+
+				  <div class="rc-input">
+					<label class="rc-input__label">
+						<div class="rc-input__title">{{_ "Deadline"}}</div>
+						<div class="rc-input__wrapper">
+							<div class="rc-input__icon">
+								{{> icon block="rc-input__icon-svg" icon="clock"}}
+							</div>
+							<input type="datetime-local" id="deadline" class="rc-input__element" name="deadline" value="{{dead}}"/>
+						</div>
+					</label>
+				</div>
+
+
 					{{> SearchCreateTask
 						onClickTag=onClickTagUser
 						deleteLastItem=deleteLastItemUser
@@ -104,4 +148,38 @@
 		</label>
 		<div class="rc-input__description">{{ description }}</div>
 	</div>
+</template>
+
+
+
+<template name="For_delivery">
+	<div class="rc-input">
+		<label class="rc-input__label">
+			<div class="rc-input__title">{{_ "Delivery_from"}}</div>
+			<div class="rc-input__wrapper">
+				<div class="rc-input__icon">
+					{{> icon block="rc-input__icon-svg" icon="arrow-down"}}
+				</div>
+				<input type="text" id="from" class="rc-input__element" placeholder="{{_ 'Delivery_from'}}" name="from" value="{{delFrom}}" />
+			</div>
+		</label>
+		<label class="rc-input__label">
+			<div class="rc-input__title">{{_ "Delivery_to"}}</div>
+			<div class="rc-input__wrapper">
+				<div class="rc-input__icon">
+					{{> icon block="rc-input__icon-svg" icon="flag"}}
+				</div>
+				<input type="text" id="to" class="rc-input__element" placeholder="{{_ 'Delivery_to'}}" name="to" value="{{delTo}}"/>
+			</div>
+		</label>
+		
+	</div>
+</template>
+
+<template name="For_production">
+	Виробництво
+</template>
+
+<template name="Material_costs_in_the_task">
+	Материал
 </template>

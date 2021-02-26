@@ -39,7 +39,7 @@ const mentionMessage = (rid, { _id, username, name }, message_embedded) => {
 	return Messages.insert(welcomeMessage);
 };
 
-const create = ({ isTask,pmid, taskt_name, reply, users, user }) => {
+const create = ({ isTask,pmid, taskt_name, reply, users, user, delivery_from, delivery_to, deadline }) => {
 	// if you set both, prid and pmid, and the rooms doesnt match... should throw an error)
 	let message = false;
 	if (pmid) {
@@ -88,7 +88,7 @@ const create = ({ isTask,pmid, taskt_name, reply, users, user }) => {
 
 	// auto invite the replied message owner
 	const invitedUsers = message ? [message.u.username, ...users] : users;
-
+	
 	const type = roomTypes.getConfig(p_room.t).getTaskType();
 	const task = createRoom(type, name, user.username, [...new Set(invitedUsers)], false, {
 		isTask: true,
@@ -97,11 +97,17 @@ const create = ({ isTask,pmid, taskt_name, reply, users, user }) => {
 		topic: p_room.name, // TODO discussions remove
 		isTask,
 
+
 		//
 	}, {
 		// overrides name validation to allow anything, because discussion's name is randomly generated
 		nameValidationRegex: /.*/,
-	});
+	},
+	delivery_from,
+	delivery_to,
+	deadline
+	
+	);
 
 	let taskMsg;
 	if (pmid) {
@@ -134,8 +140,12 @@ Meteor.methods({
 	* @param {string} reply - The reply, optional
 	* @param {string} taskt_name - task name
 	* @param {string[]} users - users to be added
+	* @param {string} delivery_from - The reply, optional
+	* @param {string} delivery_to - The reply, optional
+	* @param {string} deadline - The reply, optional
+	
 	*/
-	createTask({ isTask, pmid, taskt_name, reply, users }) {
+	createTask({ isTask, pmid, taskt_name, reply, users ,delivery_from, delivery_to, deadline}) {
 		if (!settings.get('Task_enabled')) {
 			throw new Meteor.Error('error-action-not-allowed', 'You are not allowed to create a task', { method: 'createTask' });
 		}
@@ -149,6 +159,6 @@ Meteor.methods({
 			throw new Meteor.Error('error-action-not-allowed', 'You are not allowed to create a task', { method: 'createTask' });
 		}
 
-		return create({ uid, isTask, pmid, taskt_name, reply, users, user: Meteor.user() });
+		return create({ uid, isTask, pmid, taskt_name, reply, users, user: Meteor.user(), delivery_from, delivery_to, deadline });
 	},
 });

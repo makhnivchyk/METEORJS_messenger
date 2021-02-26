@@ -38,7 +38,6 @@ const RoomMenu = React.memo(({ rid, unread, threadUnread, alert, roomOpen, type,
 	const unreadMessages = useMethod('unreadMessages');
 	const toggleFavorite = useMethod('toggleFavorite');
 	const leaveRoom = useMethod('leaveRoom');
-	
 
 	const isUnread = alert || unread || threadUnread;
 
@@ -101,7 +100,10 @@ const RoomMenu = React.memo(({ rid, unread, threadUnread, alert, roomOpen, type,
 	});
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> expansion_task
 
 	const handleToggleRead = useMutableCallback(async () => {
 		try {

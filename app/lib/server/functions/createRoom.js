@@ -11,8 +11,8 @@ import { getValidRoomName } from '../../../utils';
 import { createDirectRoom } from './createDirectRoom';
 
 
-export const createRoom = function(type, name, owner, members = [], readOnly, extraData = {}, options = {}) {
-	callbacks.run('beforeCreateRoom', { type, name, owner, members, readOnly, extraData, options });
+export const createRoom = function(type, name, owner, members = [], readOnly, extraData = {}, options = {}, delivery_from, delivery_to, deadline) {
+	callbacks.run('beforeCreateRoom', { type, name, owner, members, readOnly, extraData, options , delivery_from, delivery_to, deadline});
 
 	if (type === 'd') {
 		return createDirectRoom(members, extraData, options);
@@ -62,6 +62,9 @@ export const createRoom = function(type, name, owner, members = [], readOnly, ex
 		...extraData,
 		ts: now,
 		ro: readOnly === true,
+		from: delivery_from,
+		to: delivery_to,
+		deadl: deadline
 	};
 
 	room._USERNAMES = members;

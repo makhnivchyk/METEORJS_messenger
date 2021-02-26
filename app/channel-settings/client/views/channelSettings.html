@@ -47,6 +47,27 @@
 					{{{RocketChatMarkdown topic}}}
 				</div>
 			</label>
+
+			<!--makhn-->
+			<label class="rc-user-info__label">
+				{{_ "Deadline"}}
+				<div class="rc-user-info__description">
+					{{deadline}}
+				</div>
+			</label>
+			<label class="rc-user-info__label">
+				{{_ "Delivery_from"}}
+				<div class="rc-user-info__description">
+					{{delivery_from}}
+				</div>
+			</label>
+			<label class="rc-user-info__label">
+				{{_ "Delivery_to"}}
+				<div class="rc-user-info__description">
+					{{delivery_to}}
+				</div>
+			</label>
+			<!--makhn-->
 			{{#if broadcast}}
 				<label class="rc-user-info__label">
 					<b>{{_ "Broadcast_channel"}}:</b> {{_ "Broadcast_channel_Description"}}
@@ -94,7 +115,7 @@
 				{{/if}}
 			{{/each}}
 		</select>
-		<input type="submit" style= "color:black;" class="status-dropdown-save" value="Save"/>
+		<input type="submit" style="color: black;" class="status-dropdown-save" value="Save"/>
 </form>
 	{{/if}}
 

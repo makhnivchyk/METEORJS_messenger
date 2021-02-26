@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Blaze } from 'meteor/blaze';
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
 import toastr from 'toastr';
-
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { roomTypes } from '../../../../utils/client';
 import { callbacks } from '../../../../callbacks/client';
 import { ChatRoom, ChatSubscription } from '../../../../models/client';
@@ -13,7 +13,24 @@ import { AutoComplete } from '../../../../meteor-autocomplete/client';
 
 import './CreateTask.html';
 
+
 Template.CreateTask.helpers({
+	delivery() {
+		if(Template.instance().state.get() == 'delivery'){
+			return 1;
+		}
+	},
+	// production() {
+	// 	if(Template.instance().state.get() == 'production'){
+	// 		return 1;
+	// 	}
+	// },
+	// costs() {
+	// 	if(Template.instance().state.get() == 'costs'){
+	// 		return 1;
+		// }
+	// },
+
 	onSelectUser() {
 		return Template.instance().onSelectUser;
 	},
@@ -84,6 +101,15 @@ Template.CreateTask.helpers({
 	nameSuggestion() {
 		return Template.instance().taskName.get();
 	},
+	delFrom() {
+		return Template.instance().deliverFrom.get();
+	},
+	delTo() {
+		return Template.instance().deliverTo.get();
+	},
+	dead() {
+		return Template.instance().deadlin.get();
+	},
 });
 
 Template.CreateTask.events({
@@ -94,9 +120,26 @@ Template.CreateTask.events({
 		const { value } = e.target;
 		t.reply.set(value);
 	},
+	'input #from'(e, t) {
+		t.deliverFrom.set(e.target.value);
+	},
+	'input #to'(e, t) {
+		t.deliverTo.set(e.target.value);
+	},
+	'input #deadline'(e, t) {
+		t.deadlin.set(e.target.value);
+	},
+	'change #select_task_type'(e, t){
+		var tp = $(e.currentTarget).val();
+		t.state.set (tp);
+	},
 	async 'submit #create-task, click .js-save-task'(event, instance) {
 		event.preventDefault();
 		const parentChannel = instance.parentChannel.get();
+
+		const delivery_from = instance.deliverFrom.get();;
+		const delivery_to = instance.deliverTo.get();
+		const deadline = instance.deadlin.get();
 
 		const { pmid } = instance;
 		const taskt_name = instance.taskName.get();
@@ -109,7 +152,7 @@ Template.CreateTask.events({
 			const errorText = TAPi18n.__('Invalid_room_name', `${ parentChannel }...`);
 			return toastr.error(errorText);
 		}
-		const result = await call('createTask', { isTask, pmid, taskt_name, reply, users });
+		const result = await call('createTask', { isTask, pmid, taskt_name, reply, users, delivery_from, delivery_to, deadline });
 		// callback to enable tracking
 		callbacks.run('afterTask', Meteor.user(), result);
 
@@ -128,6 +171,8 @@ Template.CreateTask.onRendered(function() {
 const suggestName = (msg = '') => msg.substr(0, 140);
 
 Template.CreateTask.onCreated(function() {
+	this.state = new ReactiveVar(false);
+
 	const { rid, message: msg } = this.data;
 
 	const parentRoom = rid && ChatSubscription.findOne({ rid });
@@ -150,6 +195,11 @@ Template.CreateTask.onCreated(function() {
 	this.selectParent = new ReactiveVar(room && room.rid);
 
 	this.reply = new ReactiveVar('');
+
+	this.deliverFrom = new ReactiveVar();
+	this.deliverTo = new ReactiveVar();
+	this.deadlin = new ReactiveVar();
+
 
 
 	this.selectedRoom = new ReactiveVar(room ? [room] : []);
@@ -277,6 +327,7 @@ Template.SearchCreateTask.onCreated(function() {
 	this.selected = new ReactiveVar([]);
 	this.onClickTag = this.data.onClickTag;
 	this.deleteLastItem = this.data.deleteLastItem;
+	
 
 	const { collection, endpoint, field, sort, onSelect, selector = (match) => ({ term: match }) } = this.data;
 	this.ac = new AutoComplete(

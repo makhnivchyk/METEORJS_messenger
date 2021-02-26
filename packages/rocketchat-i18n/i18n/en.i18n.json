@@ -3484,6 +3484,7 @@
   "TargetRoom_Description": "The room where messages will be sent which are a result of this event being fired. Only one target room is allowed and it must exist.",
   "Target user not allowed to receive messages": "Target user not allowed to receive messages",
   "Task_name": "Task name",
+  "Task_type": "Task type",
   "Task": "Task",
   "Tasks": "Tasks",
   "Task_start": "Start a Task",
@@ -4047,5 +4048,12 @@
   "Your_question": "Your question",
   "Your_server_link": "Your server link",
   "Your_temporary_password_is_password": "Your temporary password is <strong>[password]</strong>.",
-  "Your_workspace_is_ready": "Your workspace is ready to use 🎉"
+  "Your_workspace_is_ready": "Your workspace is ready to use 🎉",
+  "Simple_task":"Simple task",
+  "For_delivery":"For delivery",
+  "For_production":"For production",
+  "Material_costs_in_the_task":"Material costs in the task",
+  "Delivery_from" : "From",
+  "Delivery_to" : "To",
+  "Deadline" : "Deadline"
 }
