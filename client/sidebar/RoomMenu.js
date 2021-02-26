@@ -100,10 +100,6 @@ const RoomMenu = React.memo(({ rid, unread, threadUnread, alert, roomOpen, type,
 	});
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> expansion_task
 
 	const handleToggleRead = useMutableCallback(async () => {
 		try {
