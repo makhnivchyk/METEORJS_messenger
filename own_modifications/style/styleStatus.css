@@ -1,4 +1,4 @@
-.status-dropdown {
+.discussion-status-dropdown {
     position: relative;
     border: solid;
     background-color: transparent;
@@ -29,8 +29,99 @@
 	justify-content: center;
 }
 
-.status-dropdown select {
+.discussion-status-dropdown select {
     display: none; 
+}
+
+.discussion-status span {
+    padding-left:10px;
+    padding-right:10px;
+    padding-top: 2px;
+    padding-bottom:2px;
+}
+
+
+.discussion-status .new {
+    background-color: rgb(245, 228, 197);
+}
+.discussion-status .in_progress {
+    background-color: rgb(255, 255, 112);
+}
+.discussion-status .done {
+    background-color: rgb(154, 255, 154);
+}
+.discussion-status .on_hold {
+    background-color: rgba(144, 144, 255, 0.979);
+    
+}
+.discussion-status .cancelled {
+    background-color: rgb(255, 194, 81);
+}
+.discussion-status .spam {
+    background-color: rgb(255, 72, 72);
+}
+.task-status-dropdown {
+    position: relative;
+    border: solid;
+    background-color: transparent;
+    width: 100%;
+
+    color: #000000;
+
+    border-width: var(--button-border-width);
+    border-radius: var(--button-border-radius);
+    border-color: #000000;
+
+    font-size: var(--button-text-size);
+    font-weight: 600;
+
+    display: flex;
+
+	height: 40px;
+
+	min-height: 40px;
+
+	padding: 0 1.5rem;
+
+	cursor: pointer;
+    transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+
+    text-align: center;
+    align-items: center;
+	justify-content: center;
+}
+
+.task-status-dropdown select {
+    display: none; 
+}
+
+.task-status span {
+    padding-left:10px;
+    padding-right:10px;
+    padding-top: 2px;
+    padding-bottom:2px;
+    margin-right: 2px;
+}
+
+
+.task-status .new {
+    background-color: rgb(245, 228, 197);
+}
+.task-status .in_progress {
+    background-color: rgb(255, 255, 112);
+}
+.task-status .done {
+    background-color: rgb(154, 255, 154);
+}
+.task-status .on_hold {
+    background-color: rgba(144, 144, 255, 0.979);
+    
+}
+.task-status .cancelled {
+    background-color: rgb(255, 194, 81);
+}
+.task-status .spam {
+    background-color: rgb(255, 72, 72);
 }
 .status-dropdown-save {
     margin-top: 3%;
@@ -62,34 +153,4 @@
     text-align: center;
     align-items: center;
 	justify-content: center;
-}
-
-
-.status span {
-    padding-left:10px;
-    padding-right:10px;
-    padding-top: 2px;
-    padding-bottom:2px;
-    margin-right: 10px;
-}
-
-
-.status .new {
-    background-color: rgb(245, 228, 197);
-}
-.status .in_progress {
-    background-color: rgb(255, 255, 112);
-}
-.status .done {
-    background-color: rgb(154, 255, 154);
-}
-.status .on_hold {
-    background-color: rgba(144, 144, 255, 0.979);
-    
-}
-.status .cancelled {
-    background-color: rgb(255, 194, 81);
-}
-.status .spam {
-    background-color: rgb(255, 72, 72);
 }
