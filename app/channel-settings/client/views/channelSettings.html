@@ -106,7 +106,7 @@
 
 	{{#if isDiscussion}}
 	<form class="js-change-room-status">
-		<select name="st" class="status-dropdown">
+		<select name="st" class="discussion-status-dropdown">
 			{{#each modStatuses }}
 				{{#if isActiveStatus key}}
 					<option value="{{key}}" selected style="display: block !important;">{{value}}</option>
@@ -122,7 +122,7 @@
 	<!--makhn-->
 	{{#if isTask}}
 	<form class="js-change-room-status">
-	<select name="st" class="status-dropdown">
+	<select name="st" class="task-status-dropdown">
 		{{#each modStatuses }}
 			{{#if isActiveStatus key}}
 				<option value="{{key}}" selected style="display: block !important;">{{value}}</option>
@@ -131,7 +131,7 @@
 			{{/if}}
 		{{/each}}
 	</select>
-	<input type="submit" class="status-dropdown-save" value="Save"/>
+	<input type="submit"  style="color: black;" class="status-dropdown-save" value="Save"/>
 </form>
 	
 
