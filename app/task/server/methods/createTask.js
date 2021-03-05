@@ -125,7 +125,8 @@ const create = ({ isTask,pmid, taskt_name, reply, users, user, delivery_from, de
 	}
 
 	// #mod
-	modSaveStatus(task._id, modDefaultStatusKey);
+	// modSaveStatus(task._id, modDefaultStatusKey);
+	Rooms.modSetStatusById(task._id, modDefaultStatusKey);
 	//
 
 	return task;

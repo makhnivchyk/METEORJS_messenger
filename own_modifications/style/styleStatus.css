@@ -127,14 +127,14 @@
     margin-top: 3%;
     position: relative;
     border: solid;
-    background-color:  #5ced8d !important;
+    background-color:  #00478f !important;
     width: 100%;
 
-    color: #000000;
+    color: white;
 
     border-width: var(--button-border-width);
     border-radius: var(--button-border-radius);
-    border-color: #5ced8d !important;
+    border-color: #00478f !important;
 
     font-size: var(--button-text-size);
     font-weight: 600;

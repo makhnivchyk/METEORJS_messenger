@@ -769,6 +769,29 @@ export class Messages extends Base {
 	}
 
 	// INSERT
+
+//makhn
+
+insertMessageForChangeStatus(st, task){
+    const message={
+      rid: "GENERAL",
+      changed : "exists",
+      task_name : task,
+      // old_status : old_st, 
+      status : st, 
+      ts: new Date(),
+      msg: `Changed status on <${task}>  to  <${st}>`, 
+      u: {
+        _id: Meteor.userId(),
+        username: Meteor.user().username,
+    },
+    };
+    mss = this.insert(message);
+    
+    return mss;
+
+  }
+	
 	createWithTypeRoomIdMessageAndUser(type, roomId, message, user, extraData) {
 		const record = {
 			t: type,

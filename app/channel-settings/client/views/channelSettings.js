@@ -156,6 +156,7 @@ Template.channelSettings.events({
 	'click .js-delete'() {
 		return erase(this.rid);
 	},
+
 	
 	// #mod Handle status change status button and save status
 	"submit .js-change-room-status"(e, instance) {
