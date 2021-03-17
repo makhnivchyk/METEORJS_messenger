@@ -772,13 +772,14 @@ export class Messages extends Base {
 
 //makhn
 
-insertMessageForChangeStatus(st, task){
+insertMessageForChangeStatus(st, task, ridTask){
     const message={
-      rid: "GENERAL",
+      rid: ridTask,
       changed : "exists",
       task_name : task,
       // old_status : old_st, 
       status : st, 
+	  drid : ridTask,
       ts: new Date(),
       msg: `Changed status on <${task}>  to  <${st}>`, 
       u: {
@@ -786,7 +787,7 @@ insertMessageForChangeStatus(st, task){
         username: Meteor.user().username,
     },
     };
-    mss = this.insert(message);
+    let mss = this.insert(message);
     
     return mss;
 

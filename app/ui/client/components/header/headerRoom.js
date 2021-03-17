@@ -14,7 +14,7 @@ import { emoji } from '../../../../emoji';
 import { Markdown } from '../../../../markdown/client';
 import { hasAllPermission } from '../../../../authorization';
 import { getUidDirectMessage } from '../../../../ui-utils/client/lib/getUidDirectMessage';
-
+import { modStatusChoices } from '../../../../../own_modifications/statusChoices';
 import './headerRoom.html';
 
 const getUserStatus = (id) => {
@@ -28,6 +28,19 @@ const getUserStatusText = (id) => {
 };
 
 Template.headerRoom.helpers({
+	modCurrentStatus() {
+		// const { msg } = this;
+		// if (msg.isTask ){
+			const room = Rooms.findOne(this._id);
+			return {
+				key:room.modStatus, 
+				value: modStatusChoices[room.modStatus]
+			};
+		// }
+
+	},
+
+
 	isDiscussion: () => Template.instance().state.get('discussion'),
 	//makhn
 	isTask: () => Template.instance().state.get('task'),

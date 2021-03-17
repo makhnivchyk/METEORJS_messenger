@@ -456,7 +456,7 @@ Template.message.helpers({
 	},
 	modCurrentStatus() {
 		const { msg } = this;
-		if (msg.drid){
+		if (msg.drid ){
 			// let modDiscussionStatus = Rooms.findOneById(msg.drid, { modDiscussionStatus:1, _id:0 });
 			// modTODO search only modDiscussionStatus field
 			const room = ChatRoom.findOne({_id: msg.drid});
@@ -465,6 +465,15 @@ Template.message.helpers({
 				value: modStatusChoices[room.modStatus]
 			};
 		}
+		// if (msg.changed ){
+		// 	// let modDiscussionStatus = Rooms.findOneById(msg.drid, { modDiscussionStatus:1, _id:0 });
+		// 	// modTODO search only modDiscussionStatus field
+		// 	const room = ChatRoom.findOne({_id: msg._id});
+		// 	return {
+		// 		key:room.modStatus, 
+		// 		value: modStatusChoices[room.modStatus]
+		// 	};
+		// }
 		// return room.modDiscussionStatus;
 		// # TOOD: add Rooms.find() for id of message.rid or smth like that.
 	},

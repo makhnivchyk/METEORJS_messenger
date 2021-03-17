@@ -160,16 +160,19 @@ Template.channelSettings.events({
 	
 	// #mod Handle status change status button and save status
 	"submit .js-change-room-status"(e, instance) {
+		e.preventDefault();
 		var mStatus = e.target.st.value;
+		// console.log(mStatus);
 		data = {
 			'newStatus': mStatus,
 		
 			'room': instance.room
 		}
 		
-		sendPostRequestToUrl('https://httpbin.org/anything', data);
+		// // sendPostRequestToUrl('https://httpbin.org/anything', data);
 		Meteor.call('saveRoomSettings', instance.room._id, 'modStatus', mStatus);
-		target.st.value = '';
+		// e.target.st.value = '';
+		
 	},
 
 

@@ -11,7 +11,7 @@ export const modSaveStatus = function(rid, modStatus, user) {
     // let customFields = room.customFields;
 
     const update = Rooms.modSetStatusById(rid, modStatus);
-    const message = Messages.insertMessageForChangeStatus(modStatus, room.fname);
+    const message = Messages.insertMessageForChangeStatus(modStatus, room.fname, rid);
     // result = saveRoomCustomFields(rid, customFields, user);
     return update;
 };

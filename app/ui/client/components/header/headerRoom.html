@@ -17,6 +17,12 @@
 			<div class="rc-header__block rc-header__block--action js-open-parent-channel-task" title={{_ "Back_to_room"}}>
 				<span class="rc-header__first-icon">{{> icon block="rc-header__icon rc-header__icon" icon="back"}}</span>
 			</div>
+			<!-- <div class="task-status" style="color: black;">
+				<span class="{{ modCurrentStatus.key }}">
+					{{ modCurrentStatus.value }} 
+				</span>
+			</div> -->
+		
 		{{/if}}
 
 			{{#if isToggleFavoriteButtonVisible}}
@@ -53,7 +59,14 @@
 					</span>{{/userPresence}}
 					{{else}}
 					{{#if roomTopic}}<span class="rc-header__topic">{{{roomTopic}}}</span>{{/if}}
+					
 					{{/if}}
+						<span class="task-status" style="color: black;">
+				<span class="{{ modCurrentStatus.key }}">
+					{{ modCurrentStatus.value }} 
+				</span>
+			</span>
+					
 				</div>
 
 				{{#if sentimentSmile}}
